@@ -1,5 +1,5 @@
 apply from: "${rootProject.rootDir}/config.gradle"
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
@@ -17,7 +17,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    if (!rootProject.ext.isModule) {
-        implementation project(':wanandroid')
-    }
+
+    //公用依赖包
+    api project(':projectcore')
 }

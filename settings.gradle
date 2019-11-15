@@ -1,1 +1,1 @@
-include ':app', ':basecore'
+include ':app', ':basecore', ':projectcore', ':wanandroid'
