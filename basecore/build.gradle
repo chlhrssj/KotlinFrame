@@ -2,6 +2,8 @@ apply from: "${rootProject.rootDir}/config.gradle"
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.jakewharton.butterknife'
 
 android {
     project.ext.setDefaultConfig project
@@ -23,6 +25,31 @@ dependencies {
     api "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayout_version"
     api "com.google.android.material:material:$rootProject.material_version"
     api "androidx.core:core-ktx:$rootProject.ktx_version"
+
+    //glide
+    api "com.github.bumptech.glide:glide:$rootProject.glide_version"
+    kapt "com.github.bumptech.glide:compiler:$rootProject.glide_version"
+
+    //butterknife
+    api "com.jakewharton:butterknife:$rootProject.butterknife_version"
+    kapt "com.jakewharton:butterknife-compiler:$rootProject.butterknife_version"
+
+    //gson
+    implementation "com.google.code.gson:gson:$rootProject.gson_version"
+
+    //rx
+    api "com.github.ReactiveX:RxKotlin:$rootProject.rxkotlin_version"
+    api "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroid_version"
+
+    //retrofit2
+    api "com.squareup.retrofit2:retrofit:$rootProject.retrofit_version"
+    api "com.squareup.retrofit2:converter-gson:$rootProject.retrofit_version"
+    api "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofit_version"
+    api "com.squareup.okhttp3:logging-interceptor:3.10.0"
+
+    //leak
+    debugApi "com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanary_version"
+    releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakcanary_version"
 
 
     testImplementation 'junit:junit:4.12'
