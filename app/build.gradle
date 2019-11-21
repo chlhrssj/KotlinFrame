@@ -6,10 +6,36 @@ apply plugin: 'kotlin-android-extensions'
 android {
     project.ext.setDefaultConfig project
 
+    //签名
+    signingConfigs {
+        release {
+            storeFile file(store_File)
+            storePassword store_Password
+            keyAlias = key_Alias
+            keyPassword key_Password
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled false   //开启混淆
+            zipAlignEnabled false  //压缩优化
+            shrinkResources false  //移出无用资源
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def date = new Date().format("yyyyMMdd", TimeZone.getTimeZone("Asia/Beijing"))
+            if (variant.buildType.name.equals('release')) {
+                def releaseApkName = "KotlinFrame_${variant.versionName}_${date}.apk"
+                outputFileName = releaseApkName
+            }
         }
     }
 
