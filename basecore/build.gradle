@@ -41,7 +41,7 @@ dependencies {
     kapt "com.jakewharton:butterknife-compiler:$rootProject.butterknife_version"
 
     //gson
-    implementation "com.google.code.gson:gson:$rootProject.gson_version"
+    api "com.google.code.gson:gson:$rootProject.gson_version"
 
     //rx
     api "com.github.ReactiveX:RxKotlin:$rootProject.rxkotlin_version"
@@ -55,7 +55,13 @@ dependencies {
 
     //leak
     debugApi "com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanary_version"
-    releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakcanary_version"
+
+    // 基础依赖包，必须要依赖
+    api 'com.gyf.immersionbar:immersionbar:3.0.0'
+    // fragment快速实现（可选）
+    api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
+    // kotlin扩展（可选）
+    api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
 
 
     testImplementation 'junit:junit:4.12'

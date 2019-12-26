@@ -1,6 +1,8 @@
 package com.chlhrssj.basecore.constant
 
 import android.app.Application
+import leakcanary.AppWatcher
+import leakcanary.ObjectWatcher
 
 /**
  * Create by rssj on 2019-12-25
