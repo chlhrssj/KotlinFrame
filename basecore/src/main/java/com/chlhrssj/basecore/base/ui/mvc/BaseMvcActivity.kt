@@ -9,6 +9,7 @@ import butterknife.Unbinder
 import com.chlhrssj.basecore.base.impl.ILoadView
 import com.chlhrssj.basecore.constant.BaseApp
 import com.gyf.immersionbar.ImmersionBar
+import io.reactivex.disposables.CompositeDisposable
 
 /**
  * Create by rssj on 2019-12-26
@@ -20,6 +21,7 @@ abstract class BaseMvcActivity : AppCompatActivity(), ILoadView {
         get() = this
     private var unBinder: Unbinder? = null
     protected var regEvent: Boolean = false
+    private val compositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
