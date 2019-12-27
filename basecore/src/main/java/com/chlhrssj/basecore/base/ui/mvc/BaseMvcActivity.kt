@@ -6,22 +6,26 @@ import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import com.chlhrssj.basecore.base.event.BaseEvent
 import com.chlhrssj.basecore.base.impl.ILoadView
 import com.chlhrssj.basecore.constant.BaseApp
-import com.gyf.immersionbar.ImmersionBar
+import com.gyf.immersionbar.ktx.immersionBar
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Create by rssj on 2019-12-26
  */
 abstract class BaseMvcActivity : AppCompatActivity(), ILoadView {
 
-    protected lateinit var mImmersionBar: ImmersionBar
     protected val mView: ILoadView
         get() = this
     private var unBinder: Unbinder? = null
     protected var regEvent: Boolean = false
-    private val compositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
+    private var compositeDisposable: CompositeDisposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
@@ -30,12 +34,18 @@ abstract class BaseMvcActivity : AppCompatActivity(), ILoadView {
         unBinder = ButterKnife.bind(this)
 
         BaseApp.getApp().getActCtrl().addActivity(this)
+
+        initImmersionBar()
+        initView()
+        if (regEvent) {
+            EventBus.getDefault().register(this)
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         unBinder?.unbind()
-
+        compositeDisposable?.clear()
         BaseApp.getApp().getActCtrl().removeActivity(this)
     }
 
@@ -72,16 +82,41 @@ abstract class BaseMvcActivity : AppCompatActivity(), ILoadView {
     }
 
     /**
+     * rxjava管理订阅者
+     */
+    protected fun addDisposable(disposable: Disposable) {
+        if (compositeDisposable == null) {
+            compositeDisposable = CompositeDisposable()
+        }
+        compositeDisposable?.add(disposable)
+    }
+
+    /**
+     * 初始化头部
+     */
+    open fun initImmersionBar() {
+        immersionBar {
+            fitsSystemWindows(true)
+            statusBarDarkFont(true)
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: BaseEvent) {
+        onEvent(event)
+    }
+
+    protected fun onEvent(event: BaseEvent) {
+
+    }
+
+    /**
      * 获取当前Activity的UI布局
      *
      * @return 布局id
      */
     protected abstract fun getLayoutId(): Int
 
-    /**
-     * 初始化标题
-     */
-    protected abstract fun initTitle()
 
     /**
      * 初始化数据
