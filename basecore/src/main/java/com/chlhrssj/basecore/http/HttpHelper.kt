@@ -5,6 +5,7 @@ import androidx.core.util.contains
 import com.chlhrssj.basecore.BuildConfig
 import com.chlhrssj.basecore.constant.BaseApp
 import com.chlhrssj.basecore.util.NetUtils
+import com.orhanobut.logger.Logger
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Create by rssj on 2020-01-02
  */
-class HttpHelper {
+class HttpHelper private constructor(hostType: Int){
 
     /**
      * 多少种Host类型
@@ -43,61 +44,17 @@ class HttpHelper {
     //sparsearray 比 hashmap 更优化内存
     private val sRetrofitManager = SparseArray<HttpHelper>(TYPE_COUNT)
 
-    /*************************缓存设置*********************/
-/*
-   1. noCache 不使用缓存，全部走网络
-
-    2. noStore 不使用缓存，也不存储缓存
-
-    3. onlyIfCached 只使用缓存
-
-    4. maxAge 设置最大失效时间，失效则不使用 需要服务器配合
-
-    5. maxStale 设置最大失效时间，失效则不使用 需要服务器配合 感觉这两个类似 还没怎么弄清楚，清楚的同学欢迎留言
-
-    6. minFresh 设置有效时间，依旧如上
-
-    7. FORCE_NETWORK 只走网络
-
-    8. FORCE_CACHE 只走缓存*/
-
-    /**
-     * 构造方法私有
-     *
-     * @param hostType
-     */
-    private constructor(hostType: Int) {
+    init {
         val builder = OkHttpClient.Builder()
         if (BuildConfig.DEBUG) {
             //开启Log
-            val logInterceptor = HttpLoggingInterceptor(HttpLogger())
-            logInterceptor.level = HttpLoggingInterceptor.Level.BODY
-            builder.addNetworkInterceptor(logInterceptor)
+            initLogInterceptor(builder)
         }
-        //缓存
-        val cacheFile = File(BaseApp.getApp().getCacheDir(), "cache")
-        val cache = Cache(cacheFile, (1024 * 1024 * 100).toLong()) //100Mb
-        //增加头部信息
-        //        Interceptor headerInterceptor = new Interceptor() {
-        //            @Override
-        //            public Response intercept(Chain chain) throws IOException {
-        //                Request build = chain.request().newBuilder()
-        //                        .addHeader("Content-Type", "application/json")
-        //                        .build();
-        //                return chain.proceed(build);
-        //            }
-        //        };
-
-        // okHttpClient = new OkHttpClient.Builder();
+        //添加缓存
+        initCacheInterceptor(builder)
 
         builder.readTimeout(READ_TIME_OUT.toLong(), TimeUnit.MILLISECONDS)
             .connectTimeout(CONNECT_TIME_OUT.toLong(), TimeUnit.MILLISECONDS)
-            //                .addInterceptor(new CacheInterceptor(60 * 60 * 24))
-            //                .addNetworkInterceptor(new CacheNetworkInterceptor())
-//            .addNetworkInterceptor(StethoInterceptor())//
-        // .cache(cache)
-        // .addInterceptor(headerInterceptor)
-        // .build();
 
         okHttpClient = builder.build()
 
@@ -108,21 +65,30 @@ class HttpHelper {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 
-        // movieService = retrofit.create(ApiService.class);
     }
 
-    fun getDefault(hostType: Int): Retrofit {
-        var retrofitManager: HttpHelper
-        if (sRetrofitManager.contains(hostType)) {
-            retrofitManager = sRetrofitManager.get(hostType)
-        } else {
-            retrofitManager = HttpHelper(hostType)
-            sRetrofitManager.put(hostType, retrofitManager)
-        }
-
-        return retrofitManager.retrofit
+    /**
+     * 添加缓存拦截器
+     */
+    fun initCacheInterceptor(builder: OkHttpClient.Builder): OkHttpClient.Builder {
+        //缓存
+        val cacheFile = File(BaseApp.getApp().getCacheDir(), "cache")
+        val cache = Cache(cacheFile, (1024 * 1024 * 100).toLong()) //100Mb
+        builder.addNetworkInterceptor(CacheNetworkInterceptor())
+            .addInterceptor(CacheInterceptor(60 * 60 * 24))
+            .cache(cache)
+        return builder
     }
 
+    /**
+     * 添加打印日志拦截器
+     */
+    fun initLogInterceptor(builder: OkHttpClient.Builder): OkHttpClient.Builder {
+        val logInterceptor = HttpLoggingInterceptor(HttpLogger())
+        logInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        builder.addNetworkInterceptor(logInterceptor)
+        return builder
+    }
 
     /**
      * 根据网络状况获取缓存的策略
@@ -132,7 +98,7 @@ class HttpHelper {
         return if (NetUtils.isNetConnected(BaseApp.getApp())) CACHE_CONTROL_AGE else CACHE_CONTROL_CACHE
     }
 
-    inner class CacheNetworkInterceptor : Interceptor {
+    class CacheNetworkInterceptor : Interceptor {
         @Throws(IOException::class)
         override fun intercept(chain: Interceptor.Chain): Response {
             val request = chain.request()
@@ -146,7 +112,7 @@ class HttpHelper {
         }
     }
 
-    inner class CacheInterceptor(private val maxStale: Int) : Interceptor {
+    class CacheInterceptor(private val maxStale: Int) : Interceptor {
 
         @Throws(IOException::class)
         override fun intercept(chain: Interceptor.Chain): Response {
@@ -163,6 +129,12 @@ class HttpHelper {
 
             }
             return chain.proceed(request)
+        }
+    }
+
+    class HttpLogger : HttpLoggingInterceptor.Logger {
+        override fun log(message: String) {
+            Logger.d(message)
         }
     }
 

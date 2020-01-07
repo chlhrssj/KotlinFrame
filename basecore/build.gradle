@@ -35,6 +35,10 @@ dependencies {
     //glide
     api "com.github.bumptech.glide:glide:$rootProject.glide_version"
     kapt "com.github.bumptech.glide:compiler:$rootProject.glide_version"
+    //glide换转
+    api 'jp.wasabeef:glide-transformations:4.1.0'
+    // If you want to use the GPU Filters
+    api 'jp.co.cyberagent.android:gpuimage:2.0.0'
 
     //butterknife
     api "com.jakewharton:butterknife:$rootProject.butterknife_version"
@@ -68,6 +72,13 @@ dependencies {
 
     //日志
     api 'com.orhanobut:logger:2.2.0'
+
+    //recyclerview adapter
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47'
+
+    //1.0.5及以前版本的老用户升级需谨慎，API改动过大
+    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
