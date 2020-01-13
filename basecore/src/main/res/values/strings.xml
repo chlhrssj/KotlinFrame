@@ -1,2 +1,18 @@
 <resources>
+
+    <string name="base_cancel">取消</string>
+    <string name="base_commit">提交</string>
+    <string name="base_close">关闭</string>
+    <string name="base_send">发送</string>
+    <string name="base_confirm">确定</string>
+    <string name="base_finish">完成</string>
+    <string name="base_clear">清空</string>
+    <string name="base_delete">删除</string>
+    <string name="base_allow">允许</string>
+    <string name="base_refuse">拒绝</string>
+
+    <string name="base_rmb">￥</string>
+
+    <string name="base_loading">加载中&#8230;</string>
+
 </resources>

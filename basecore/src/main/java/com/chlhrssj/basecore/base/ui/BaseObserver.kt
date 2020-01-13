@@ -11,19 +11,13 @@ import retrofit2.HttpException
 /**
  * Create by rssj on 2020-01-03
  */
-abstract class BaseObserver<T>(view: ILoadView) : ResourceObserver<T>() {
+abstract class BaseObserver<T>(var mILoadView: ILoadView) : ResourceObserver<T>() {
 
-    protected var mILoadView: ILoadView
     protected var mErrorMsg: String? = null
     protected var mDialogView: ILoadView? = null
     protected var msg = "正在加载中..."
     protected var isShowError = true
     protected var rlRefreshLayout: SmartRefreshLayout? = null
-
-    init {
-        this.mILoadView = view
-    }
-
 
     protected constructor(view: ILoadView, isShowHUD: Boolean) : this(view) {
         if (isShowHUD) {
