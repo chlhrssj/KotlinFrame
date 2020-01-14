@@ -1,2 +1,7 @@
 <resources>
+
+    <string name="main_page_0">首页</string>
+    <string name="main_page_1">你的</string>
+    <string name="main_page_2">我的</string>
+
 </resources>

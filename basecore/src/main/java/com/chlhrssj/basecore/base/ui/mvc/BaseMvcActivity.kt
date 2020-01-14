@@ -23,18 +23,16 @@ abstract class BaseMvcActivity : AppCompatActivity(), ILoadView {
 
     protected val mView: ILoadView
         get() = this
-    private var unBinder: Unbinder? = null
     protected var regEvent: Boolean = false
     private var compositeDisposable: CompositeDisposable? = null
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
-        unBinder = ButterKnife.bind(this)
+
+        ButterKnife.bind(this)
 
         BaseApp.getApp().getActCtrl().addActivity(this)
-
         initImmersionBar()
         initView()
         if (regEvent) {
@@ -44,7 +42,6 @@ abstract class BaseMvcActivity : AppCompatActivity(), ILoadView {
 
     override fun onDestroy() {
         super.onDestroy()
-        unBinder?.unbind()
         compositeDisposable?.clear()
         BaseApp.getApp().getActCtrl().removeActivity(this)
     }

@@ -10,7 +10,7 @@
         android:layout_height="80dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@drawable/base_ll_bg_rect_white">
+        android:background="@drawable/base_bg_rect_white">
 
         <ProgressBar
             android:id="@+id/iv_anim"

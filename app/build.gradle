@@ -43,7 +43,5 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    if (!rootProject.ext.isModule) {
-        implementation project(':wanandroid')
-    }
+    implementation project(':wanandroid')
 }

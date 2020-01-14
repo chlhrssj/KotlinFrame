@@ -3,7 +3,7 @@
           package="com.chlhrssj.kotlin">
 
     <application
-            android:name="com.chlhrssj.basecore.constant.BaseApp"
+            android:name="com.chlhrssj.projectcore.base.MyApp"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"

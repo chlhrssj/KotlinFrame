@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#F56910</color>
-    <color name="colorPrimaryDark">#F56910</color>
-    <color name="colorAccent">#F56910</color>
+    <color name="colorPrimary">#FF5722</color>
+    <color name="colorPrimaryDark">#E64A19</color>
+    <color name="colorAccent">#E64A19</color>
     <color name="colorPrimaryOverlay">#F56910</color>
 
-    <color name="otherui_color_white">#FFFFFF</color>
-    <!--点击颜色-->
-    <color name="otherui_bgColor_alert_button_press">#EAEAEA</color>
-    <color name="otherui_color_cc000">#cc000000</color>
-    <!--覆盖颜色-->
-    <color name="otherui_bgColor_overlay">#60000000</color>
-    <!--alertdialog颜色-->
-    <color name="alertdialog_line">#c6c6c6</color>
-    <color name="color_4a">#4a90e2</color>
-    <!--buttondialog颜色-->
-    <color name="otherui_color_orange_f59">#F59523</color>
-    <color name="otherui_color_red_f59_f05">#F0561A</color>
+    <color name="base_color_cc000">#cc000000</color>
 
     <color name="mainColor">#F49423</color>
     <color name="orange_fba">#FBA135</color>
