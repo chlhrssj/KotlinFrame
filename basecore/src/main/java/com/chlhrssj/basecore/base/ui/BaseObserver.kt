@@ -4,6 +4,7 @@ import android.text.TextUtils
 import android.widget.Toast
 import com.chlhrssj.basecore.base.impl.ILoadView
 import com.chlhrssj.basecore.util.NetUtils
+import com.orhanobut.logger.Logger
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import io.reactivex.observers.ResourceObserver
 import retrofit2.HttpException
@@ -19,17 +20,17 @@ abstract class BaseObserver<T>(var mILoadView: ILoadView) : ResourceObserver<T>(
     protected var isShowError = true
     protected var rlRefreshLayout: SmartRefreshLayout? = null
 
-    protected constructor(view: ILoadView, isShowHUD: Boolean) : this(view) {
+    constructor(view: ILoadView, isShowHUD: Boolean) : this(view) {
         if (isShowHUD) {
             this.mDialogView = view
         }
     }
 
-    protected constructor(view: ILoadView, rlRefresh: SmartRefreshLayout) : this(view) {
+    constructor(view: ILoadView, rlRefresh: SmartRefreshLayout) : this(view) {
         this.rlRefreshLayout = rlRefresh
     }
 
-    protected constructor(view: ILoadView, msg1: String) : this(view) {
+    constructor(view: ILoadView, msg1: String) : this(view) {
         mDialogView = view
         msg = msg1
     }
@@ -70,6 +71,7 @@ abstract class BaseObserver<T>(var mILoadView: ILoadView) : ResourceObserver<T>(
 //            rlRefreshLayout!!.finishRefresh()
 //            rlRefreshLayout!!.finishLoadMore()
 //        }
+//        val x = 2
     }
 
     /**
@@ -77,7 +79,7 @@ abstract class BaseObserver<T>(var mILoadView: ILoadView) : ResourceObserver<T>(
      * @param e
      */
     override fun onError(e: Throwable) {
-//        L.d("网络异常")
+        Logger.d(e.printStackTrace().toString())
 //        if (mView == null) {
 //            return
 //        }

@@ -10,6 +10,11 @@ package com.chlhrssj.basecore.constant
 const val KV_ISDEBUG = false
 
 /**
+ * 是否打印日志
+ */
+const val KV_LOGABLE = true
+
+/**
  * 数据传递映射
  */
 const val KV_DATA = "DADA"

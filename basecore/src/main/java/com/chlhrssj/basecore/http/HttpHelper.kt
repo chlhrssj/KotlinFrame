@@ -1,7 +1,6 @@
 package com.chlhrssj.basecore.http
 
 import android.util.SparseArray
-import androidx.core.util.contains
 import com.chlhrssj.basecore.BuildConfig
 import com.chlhrssj.basecore.constant.BaseApp
 import com.chlhrssj.basecore.util.NetUtils
@@ -15,21 +14,21 @@ import java.io.File
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
+/**
+ * 多少种Host类型
+ */
+val H_TYPE_COUNT = 10
+
+//读超时长，单位：毫秒
+val H_READ_TIME_OUT = 30000
+//连接时长，单位：毫秒
+val H_CONNECT_TIME_OUT = 15000
 
 /**
  * Create by rssj on 2020-01-02
  */
 class HttpHelper private constructor(hostType: Int){
 
-    /**
-     * 多少种Host类型
-     */
-    val TYPE_COUNT = 10
-
-    //读超时长，单位：毫秒
-    val READ_TIME_OUT = 30000
-    //连接时长，单位：毫秒
-    val CONNECT_TIME_OUT = 15000
     //设缓存有效期为3天
     private val CACHE_STALE_SEC = (60 * 60 * 24 * 3).toLong()
     //查询缓存的Cache-Control设置，为if-only-cache时只查询缓存而不会请求服务器，max-stale可以配合设置缓存失效时间
@@ -42,7 +41,7 @@ class HttpHelper private constructor(hostType: Int){
     private var okHttpClient: OkHttpClient
 
     //sparsearray 比 hashmap 更优化内存
-    private val sRetrofitManager = SparseArray<HttpHelper>(TYPE_COUNT)
+    private val sRetrofitManager = SparseArray<HttpHelper>(H_TYPE_COUNT)
 
     init {
         val builder = OkHttpClient.Builder()
@@ -53,8 +52,8 @@ class HttpHelper private constructor(hostType: Int){
         //添加缓存
         initCacheInterceptor(builder)
 
-        builder.readTimeout(READ_TIME_OUT.toLong(), TimeUnit.MILLISECONDS)
-            .connectTimeout(CONNECT_TIME_OUT.toLong(), TimeUnit.MILLISECONDS)
+        builder.readTimeout(H_READ_TIME_OUT.toLong(), TimeUnit.MILLISECONDS)
+            .connectTimeout(H_CONNECT_TIME_OUT.toLong(), TimeUnit.MILLISECONDS)
 
         okHttpClient = builder.build()
 
@@ -135,6 +134,21 @@ class HttpHelper private constructor(hostType: Int){
     class HttpLogger : HttpLoggingInterceptor.Logger {
         override fun log(message: String) {
             Logger.d(message)
+        }
+    }
+
+    companion object {
+        //sparsearray 比 hashmap 更优化内存
+        private val sRetrofitManager = SparseArray<HttpHelper>(H_TYPE_COUNT)
+        fun getDefault(hostType: Int): Retrofit {
+            var retrofitManager: HttpHelper? = sRetrofitManager.get(hostType)
+            if (retrofitManager == null) {
+                retrofitManager = HttpHelper(hostType)
+                sRetrofitManager.put(hostType, retrofitManager)
+                return retrofitManager.retrofit
+            }
+
+            return retrofitManager.retrofit
         }
     }
 

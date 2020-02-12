@@ -2,10 +2,8 @@ package com.chlhrssj.basecore.base.ui.mvc
 
 import android.content.Context
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.chlhrssj.basecore.base.event.BaseEvent
 import com.chlhrssj.basecore.base.impl.ILoadView
 import com.chlhrssj.basecore.constant.BaseApp

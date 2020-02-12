@@ -3,6 +3,11 @@ package com.chlhrssj.basecore.constant
 import android.app.Application
 import leakcanary.AppWatcher
 import leakcanary.ObjectWatcher
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
+import com.orhanobut.logger.Logger.addLogAdapter
+
+
 
 /**
  * Create by rssj on 2019-12-25
@@ -12,9 +17,15 @@ open class BaseApp : Application() {
     //Activity管理
     protected var mActivityControl: ActivityControl = ActivityControl.instance
 
+
     override fun onCreate() {
         super.onCreate()
         app = this
+
+        //初始化Logger
+        if (KV_LOGABLE) {
+            addLogAdapter(AndroidLogAdapter())
+        }
     }
 
     /**

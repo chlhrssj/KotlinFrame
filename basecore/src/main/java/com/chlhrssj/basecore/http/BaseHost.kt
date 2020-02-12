@@ -6,7 +6,7 @@ import com.chlhrssj.basecore.constant.KV_ISDEBUG
 /**
  * Create by rssj on 2020-01-02
  */
-private val H_BASEURL = if (KV_ISDEBUG) "" else ""
+private val H_BASEURL = if (KV_ISDEBUG) "https://www.wanandroid.com/" else "https://www.wanandroid.com/"
 
 val H_BASETYPE = 0
 
