@@ -41,6 +41,7 @@ class MainActivity : BaseMvcActivity(), NavigationView.OnNavigationItemSelectedL
     }
 
     private fun initFragment() {
+
         mFragmentList = ArrayList()
         mFragmentList.add(Fragment())
         mFragmentList.add(Fragment())
