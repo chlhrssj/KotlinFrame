@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../KotlinFrame.iml" filepath="$PROJECT_DIR$/../KotlinFrame.iml" group="KotlinFrame" />
+      <module fileurl="file://$PROJECT_DIR$/app.iml" filepath="$PROJECT_DIR$/app.iml" group="KotlinFrame/app" />
+      <module fileurl="file://$PROJECT_DIR$/../basecore/basecore.iml" filepath="$PROJECT_DIR$/../basecore/basecore.iml" group="KotlinFrame/basecore" />
+      <module fileurl="file://$PROJECT_DIR$/../projectcore/projectcore.iml" filepath="$PROJECT_DIR$/../projectcore/projectcore.iml" group="KotlinFrame/projectcore" />
+      <module fileurl="file://$PROJECT_DIR$/../wanandroid/wanandroid.iml" filepath="$PROJECT_DIR$/../wanandroid/wanandroid.iml" group="KotlinFrame/wanandroid" />
+    </modules>
+  </component>
+</project>

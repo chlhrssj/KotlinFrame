@@ -72,7 +72,7 @@ class ToastUtil private constructor() {
     fun showCenter(msg: String) {
 
         val toast = Toast(BaseApp.getApp())
-        val view = LayoutInflater.from(BaseApp.getApp()).inflate(R.layout.view_toast_center, null)
+        val view = LayoutInflater.from(BaseApp.getApp()).inflate(R.layout.base_view_toast_center, null)
         val tvText = view.findViewById(R.id.tv_tips) as TextView
         if (tvText != null) {
             tvText.text = msg

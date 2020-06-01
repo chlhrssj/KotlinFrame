@@ -2,9 +2,8 @@ package com.chlhrssj.wanandroid.ui
 
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
-import com.chlhrssj.basecore.base.impl.ILoadView
 import com.chlhrssj.basecore.base.ui.BaseObserver
-import com.chlhrssj.basecore.base.ui.mvc.BaseMvcActivity
+import com.chlhrssj.basecore.base.ui.mvc.BaseVcActivity
 import com.chlhrssj.basecore.http.H_BASETYPE
 import com.chlhrssj.basecore.http.HttpHelper
 import com.chlhrssj.wanandroid.R
@@ -17,7 +16,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.ArrayList
 
-class MainActivity : BaseMvcActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseVcActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
@@ -41,7 +40,6 @@ class MainActivity : BaseMvcActivity(), NavigationView.OnNavigationItemSelectedL
     }
 
     private fun initFragment() {
-
         mFragmentList = ArrayList()
         mFragmentList.add(Fragment())
         mFragmentList.add(Fragment())
@@ -92,22 +90,22 @@ class MainActivity : BaseMvcActivity(), NavigationView.OnNavigationItemSelectedL
     }
 
     fun getData() {
-        addDisposable(HttpHelper.getDefault(H_BASETYPE)
-            .create(ApiService::class.java)
-            .getHomeList("1")
-            .subscribeOn(Schedulers.io())
-            .unsubscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : BaseObserver<HomeListBean>(mView) {
-                override fun onNext(t: HomeListBean) {
-
-                }
-
-                override fun onError(e: Throwable) {
-                    super.onError(e)
-                }
-            })
-        )
+//        addDisposable(HttpHelper.getDefault(H_BASETYPE)
+//            .create(ApiService::class.java)
+//            .getHomeList("1")
+//            .subscribeOn(Schedulers.io())
+//            .unsubscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribeWith(object : BaseObserver<HomeListBean>(mView) {
+//                override fun onNext(t: HomeListBean) {
+//
+//                }
+//
+//                override fun onError(e: Throwable) {
+//                    super.onError(e)
+//                }
+//            })
+//        )
     }
 
 }

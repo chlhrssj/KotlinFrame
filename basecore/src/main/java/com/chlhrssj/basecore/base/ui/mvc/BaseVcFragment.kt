@@ -3,21 +3,18 @@ package com.chlhrssj.basecore.base.ui.mvc
 import android.content.Context
 import androidx.fragment.app.Fragment
 import butterknife.Unbinder
-import com.chlhrssj.basecore.base.impl.ILoadView
+import com.chlhrssj.basecore.base.ui.ILoadView
 import io.reactivex.disposables.CompositeDisposable
 
 /**
  * Create by rssj on 2020-03-06
  */
-class BaseMvcFragment : Fragment(), ILoadView {
+class BaseVcFragment : Fragment(), ILoadView {
 
     protected val mView: ILoadView
         get() = this
     private var unBinder: Unbinder? = null
     protected var regEvent: Boolean = false
-
-    //管理事件流订阅的生命周期CompositeDisposable
-    private var compositeDisposable: CompositeDisposable? = null
 
     override fun getContext(): Context {
         return context

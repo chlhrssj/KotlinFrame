@@ -1,11 +1,12 @@
-package com.chlhrssj.basecore.base.ui.mvc
+package com.chlhrssj.basecore.base.ui.mvvm
 
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import butterknife.ButterKnife
 import com.chlhrssj.basecore.base.event.BaseEvent
-import com.chlhrssj.basecore.base.impl.ILoadView
+import com.chlhrssj.basecore.base.ui.ILoadView
 import com.chlhrssj.basecore.constant.BaseApp
 import com.gyf.immersionbar.ktx.immersionBar
 import io.reactivex.disposables.CompositeDisposable
@@ -15,14 +16,16 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 /**
- * Create by rssj on 2019-12-26
+ * Create by rssj on 2020/4/2
  */
-abstract class BaseMvcActivity : AppCompatActivity(), ILoadView {
+abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(),
+    ILoadView {
 
     protected val mView: ILoadView
         get() = this
     protected var regEvent: Boolean = false
-    private var compositeDisposable: CompositeDisposable? = null
+
+    protected lateinit var viewModel: VM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +33,11 @@ abstract class BaseMvcActivity : AppCompatActivity(), ILoadView {
 
         ButterKnife.bind(this)
 
+        initVM();
         BaseApp.getApp().getActCtrl().addActivity(this)
         initImmersionBar()
         initView()
+        initData()
         if (regEvent) {
             EventBus.getDefault().register(this)
         }
@@ -40,7 +45,6 @@ abstract class BaseMvcActivity : AppCompatActivity(), ILoadView {
 
     override fun onDestroy() {
         super.onDestroy()
-        compositeDisposable?.clear()
         BaseApp.getApp().getActCtrl().removeActivity(this)
     }
 
@@ -77,22 +81,18 @@ abstract class BaseMvcActivity : AppCompatActivity(), ILoadView {
     }
 
     /**
-     * rxjava管理订阅者
-     */
-    protected fun addDisposable(disposable: Disposable) {
-        if (compositeDisposable == null) {
-            compositeDisposable = CompositeDisposable()
-        }
-        compositeDisposable?.add(disposable)
-    }
-
-    /**
      * 初始化头部
      */
     open fun initImmersionBar() {
         immersionBar {
             fitsSystemWindows(true)
             statusBarDarkFont(true)
+        }
+    }
+
+    open fun initVM() {
+        getVMClass().let {
+            viewModel = ViewModelProvider(this).get(it)
         }
     }
 
@@ -112,9 +112,12 @@ abstract class BaseMvcActivity : AppCompatActivity(), ILoadView {
      */
     protected abstract fun getLayoutId(): Int
 
+    protected abstract fun getVMClass(): Class<VM>
+
+    protected abstract fun initData()
 
     /**
-     * 初始化数据
+     * 初始化view
      */
     protected abstract fun initView()
 

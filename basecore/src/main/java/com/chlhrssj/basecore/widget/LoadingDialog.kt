@@ -17,7 +17,7 @@ class LoadingDialog(context: Context, msg: String? = null) {
     var process: ProgressBar
 
     init {
-        val view = View.inflate(context, R.layout.dialog_loading, null)
+        val view = View.inflate(context, R.layout.base_dialog_loading, null)
         process = view.findViewById(R.id.iv_anim)
         customDialog = CustomDialog(
             context, view, Gravity.CENTER,

@@ -1,13 +1,8 @@
 package com.chlhrssj.basecore.base.ui
 
-import android.text.TextUtils
-import android.widget.Toast
-import com.chlhrssj.basecore.base.impl.ILoadView
-import com.chlhrssj.basecore.util.NetUtils
 import com.orhanobut.logger.Logger
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import io.reactivex.observers.ResourceObserver
-import retrofit2.HttpException
 
 /**
  * Create by rssj on 2020-01-03

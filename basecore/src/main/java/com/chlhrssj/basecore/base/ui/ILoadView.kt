@@ -1,4 +1,4 @@
-package com.chlhrssj.basecore.base.impl
+package com.chlhrssj.basecore.base.ui
 
 import android.content.Context
 
