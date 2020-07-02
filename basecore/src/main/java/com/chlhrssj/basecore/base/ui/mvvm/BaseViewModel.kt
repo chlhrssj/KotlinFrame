@@ -1,16 +1,18 @@
 package com.chlhrssj.basecore.base.ui.mvvm
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+
 
 /**
  * Create by rssj on 2020/6/1
  */
-class BaseViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
-    private val viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    private fun launchOnUI(block: suspend CoroutineScope.() -> Unit) {
+        viewModelScope.launch { block() }
+    }
 
 }

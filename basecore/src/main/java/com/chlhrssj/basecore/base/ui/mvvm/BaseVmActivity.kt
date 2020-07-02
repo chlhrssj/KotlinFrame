@@ -11,6 +11,8 @@ import com.chlhrssj.basecore.constant.BaseApp
 import com.gyf.immersionbar.ktx.immersionBar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -19,7 +21,7 @@ import org.greenrobot.eventbus.ThreadMode
  * Create by rssj on 2020/4/2
  */
 abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(),
-    ILoadView {
+    CoroutineScope by MainScope(), ILoadView {
 
     protected val mView: ILoadView
         get() = this
@@ -32,8 +34,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(),
         setContentView(getLayoutId())
 
         ButterKnife.bind(this)
-
-        initVM();
+        initVM()
         BaseApp.getApp().getActCtrl().addActivity(this)
         initImmersionBar()
         initView()
