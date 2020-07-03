@@ -13,6 +13,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -47,6 +48,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(),
     override fun onDestroy() {
         super.onDestroy()
         BaseApp.getApp().getActCtrl().removeActivity(this)
+        cancel()
     }
 
     override fun getContext(): Context {
