@@ -7,44 +7,24 @@ import android.content.Context
  */
 interface ILoadView {
 
-    fun getContext(): Context
-
-    /**
-     * 网络请求错误,弹框提示
-     * @param msg
-     * @param code
-     */
-    fun showError(msg: String, code: String)
-
-    /**
-     * 显示加载Dialog
-     */
-    fun showLoadDialog(msg: String)
-
-    /**
-     * 关闭加载Dialog
-     */
-    fun dismissLoadDialog()
-
-    //----------------------------下面用来显示空界面---------------------------//
     /**
      * showNormal 页面
      */
-    fun showNormal()
+    fun <T> showNormal(msg: T? = null)
 
     /**
      * Show loading 页面
      */
-    fun showLoading()
+    fun <U> showLoading(msg: U? = null)
 
     /**
      * Show EmptyView 页面
      */
-    fun showEmpty()
+    fun <P> showEmpty(msg: P? = null)
 
     /**
      * Show error 页面
      */
-    fun showError()
+    fun <Q> showError(msg: Q? = null)
 
 }

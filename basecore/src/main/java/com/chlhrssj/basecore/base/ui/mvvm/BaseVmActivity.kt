@@ -21,8 +21,7 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * Create by rssj on 2020/4/2
  */
-abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(),
-    CoroutineScope by MainScope(), ILoadView {
+abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(), ILoadView {
 
     protected val mView: ILoadView
         get() = this
@@ -48,39 +47,10 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity(),
     override fun onDestroy() {
         super.onDestroy()
         BaseApp.getApp().getActCtrl().removeActivity(this)
-        cancel()
     }
 
-    override fun getContext(): Context {
+    fun getContext(): Context {
         return this
-    }
-
-    override fun showError(msg: String, code: String) {
-
-    }
-
-    override fun showLoadDialog(msg: String) {
-
-    }
-
-    override fun dismissLoadDialog() {
-
-    }
-
-    override fun showNormal() {
-
-    }
-
-    override fun showLoading() {
-
-    }
-
-    override fun showEmpty() {
-
-    }
-
-    override fun showError() {
-
     }
 
     /**

@@ -10,6 +10,9 @@ import com.chlhrssj.basecore.constant.BaseApp
 import com.gyf.immersionbar.ktx.immersionBar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -18,7 +21,7 @@ import org.greenrobot.eventbus.ThreadMode
  * Create by rssj on 2019-12-26
  */
 abstract class BaseVcActivity : AppCompatActivity(),
-    ILoadView {
+    CoroutineScope by MainScope(), ILoadView {
 
     protected val mView: ILoadView
         get() = this
@@ -41,38 +44,11 @@ abstract class BaseVcActivity : AppCompatActivity(),
     override fun onDestroy() {
         super.onDestroy()
         BaseApp.getApp().getActCtrl().removeActivity(this)
+        cancel()
     }
 
-    override fun getContext(): Context {
+    fun getContext(): Context {
         return this
-    }
-
-    override fun showError(msg: String, code: String) {
-
-    }
-
-    override fun showLoadDialog(msg: String) {
-
-    }
-
-    override fun dismissLoadDialog() {
-
-    }
-
-    override fun showNormal() {
-
-    }
-
-    override fun showLoading() {
-
-    }
-
-    override fun showEmpty() {
-
-    }
-
-    override fun showError() {
-
     }
 
     /**

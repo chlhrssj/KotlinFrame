@@ -14,14 +14,14 @@ import kotlinx.coroutines.launch
 abstract class BaseViewModel : ViewModel() {
 
     private val viewModelJob = SupervisorJob()
-    private val uiScope = CoroutineScope(Dispatchers.IO + viewModelJob)
+    private val ioScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
     private fun launchOnUI(block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch { block() }
     }
 
     private fun launchOnIO(block: suspend CoroutineScope.() -> Unit) {
-        uiScope.launch { block() }
+        ioScope.launch { block() }
     }
 
     override fun onCleared() {
