@@ -1,34 +1,28 @@
-package com.chlhrssj.wanandroid.ui
+package com.chlhrssj.wanandroid.ui.main
 
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
-import com.chlhrssj.basecore.base.ui.BaseObserver
+import androidx.viewbinding.ViewBinding
 import com.chlhrssj.basecore.base.ui.mvc.BaseVcActivity
-import com.chlhrssj.basecore.http.H_BASETYPE
-import com.chlhrssj.basecore.http.HttpHelper
 import com.chlhrssj.wanandroid.R
-import com.chlhrssj.wanandroid.api.ApiService
-import com.chlhrssj.wanandroid.bean.HomeListBean
+import com.chlhrssj.wanandroid.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.google.android.material.navigation.NavigationView
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.ArrayList
 
-class MainActivity : BaseVcActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    override fun getLayoutId(): Int = R.layout.activity_main
+class MainActivity : BaseVcActivity<ActivityMainBinding>(),
+    NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var mFragmentList: MutableList<Fragment>
     private var mCurrentFragment: Fragment? = null
 
-
     override fun initView() {
         initFragment()
         initBottomNavigationView()
-        getData()
     }
+
+    override fun initBinding(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -48,9 +42,9 @@ class MainActivity : BaseVcActivity(), NavigationView.OnNavigationItemSelectedLi
     }
 
     private fun initBottomNavigationView() {
-        nv_view.setItemIconTintList(null)
-        nv_view.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED)
-        nv_view.setOnNavigationItemSelectedListener {
+        binding.nvView.itemIconTintList = null
+        binding.nvView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
+        binding.nvView.setOnNavigationItemSelectedListener {
             this.onNavigationItemSelected(
                 it
             )
@@ -89,23 +83,5 @@ class MainActivity : BaseVcActivity(), NavigationView.OnNavigationItemSelectedLi
         }
     }
 
-    fun getData() {
-//        addDisposable(HttpHelper.getDefault(H_BASETYPE)
-//            .create(ApiService::class.java)
-//            .getHomeList("1")
-//            .subscribeOn(Schedulers.io())
-//            .unsubscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribeWith(object : BaseObserver<HomeListBean>(mView) {
-//                override fun onNext(t: HomeListBean) {
-//
-//                }
-//
-//                override fun onError(e: Throwable) {
-//                    super.onError(e)
-//                }
-//            })
-//        )
-    }
 
 }

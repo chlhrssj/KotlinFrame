@@ -2,14 +2,14 @@ package com.chlhrssj.basecore.base.ui.mvc
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View.inflate
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
 import butterknife.ButterKnife
 import com.chlhrssj.basecore.base.event.BaseEvent
 import com.chlhrssj.basecore.base.ui.ILoadView
 import com.chlhrssj.basecore.constant.BaseApp
 import com.gyf.immersionbar.ktx.immersionBar
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -20,21 +20,24 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * Create by rssj on 2019-12-26
  */
-abstract class BaseVcActivity : AppCompatActivity(),
+abstract class BaseVcActivity<T : ViewBinding> : AppCompatActivity(),
     CoroutineScope by MainScope(), ILoadView {
 
     protected val mView: ILoadView
         get() = this
     protected var regEvent: Boolean = false
+    private var _binding: T? = null
+    protected val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(getLayoutId())
 
-        ButterKnife.bind(this)
+        _binding = initBinding()
+        setContentView(binding.root)
 
         BaseApp.getApp().getActCtrl().addActivity(this)
         initImmersionBar()
+        initData()
         initView()
         if (regEvent) {
             EventBus.getDefault().register(this)
@@ -44,6 +47,9 @@ abstract class BaseVcActivity : AppCompatActivity(),
     override fun onDestroy() {
         super.onDestroy()
         BaseApp.getApp().getActCtrl().removeActivity(this)
+        if (regEvent) {
+            EventBus.getDefault().unregister(this)
+        }
         cancel()
     }
 
@@ -66,21 +72,30 @@ abstract class BaseVcActivity : AppCompatActivity(),
         onEvent(event)
     }
 
-    protected fun onEvent(event: BaseEvent) {
+    open fun onEvent(event: BaseEvent) {}
 
-    }
+    override fun showNormal() {}
+
+    override fun showLoading() {}
+
+    override fun showEmpty() {}
+
+    override fun showError() {}
 
     /**
-     * 获取当前Activity的UI布局
-     *
-     * @return 布局id
+     * 初始化View
      */
-    protected abstract fun getLayoutId(): Int
-
+    open fun initView() {}
 
     /**
      * 初始化数据
      */
-    protected abstract fun initView()
+    open fun initData() {}
+
+    /**
+     * 初始化viewbinding
+     */
+    abstract fun initBinding(): T
+
 
 }

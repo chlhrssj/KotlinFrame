@@ -1,29 +1,22 @@
 package com.chlhrssj.basecore.base.ui.mvvm
 
-import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import butterknife.ButterKnife
 import com.chlhrssj.basecore.base.event.BaseEvent
 import com.chlhrssj.basecore.base.ui.ILoadView
-import com.chlhrssj.basecore.constant.BaseApp
-import com.gyf.immersionbar.ktx.immersionBar
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 /**
- * Create by rssj on 2020/4/2
+ * Create by rssj on 2020/7/8
  */
-abstract class BaseVmActivity<VM : BaseViewModel, T : ViewBinding> : AppCompatActivity(),
-    ILoadView {
+abstract class BaseVmFragment<VM : BaseViewModel, T : ViewBinding> : Fragment(), ILoadView {
 
     protected val mView: ILoadView get() = this
     protected var regEvent: Boolean = false
@@ -32,14 +25,8 @@ abstract class BaseVmActivity<VM : BaseViewModel, T : ViewBinding> : AppCompatAc
     private var _binding: T? = null
     protected val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        _binding = initBinding()
-        setContentView(binding.root)
-
-        BaseApp.getApp().getActCtrl().addActivity(this)
-        initImmersionBar()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initData()
         initView()
         initVM()
@@ -49,25 +36,24 @@ abstract class BaseVmActivity<VM : BaseViewModel, T : ViewBinding> : AppCompatAc
         }
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = initBinding(inflater, container, savedInstanceState)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        BaseApp.getApp().getActCtrl().removeActivity(this)
         if (regEvent) {
             EventBus.getDefault().unregister(this)
-        }
-    }
-
-    fun getContext(): Context {
-        return this
-    }
-
-    /**
-     * 初始化头部
-     */
-    open fun initImmersionBar() {
-        immersionBar {
-            fitsSystemWindows(true)
-            statusBarDarkFont(true)
         }
     }
 
@@ -107,9 +93,12 @@ abstract class BaseVmActivity<VM : BaseViewModel, T : ViewBinding> : AppCompatAc
     /**
      * 初始化viewbinding
      */
-    abstract fun initBinding(): T
+    abstract fun initBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): T
+
 
     abstract fun getVMClass(): Class<VM>
-
-
 }

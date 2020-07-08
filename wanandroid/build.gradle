@@ -18,6 +18,14 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    viewBinding {
+        enabled = true
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 }
 
 dependencies {
@@ -25,4 +33,5 @@ dependencies {
 
     //公用依赖包
     api project(':projectcore')
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }

@@ -10,21 +10,21 @@ interface ILoadView {
     /**
      * showNormal 页面
      */
-    fun <T> showNormal(msg: T? = null)
+    fun showNormal()
 
     /**
      * Show loading 页面
      */
-    fun <U> showLoading(msg: U? = null)
+    fun showLoading()
 
     /**
      * Show EmptyView 页面
      */
-    fun <P> showEmpty(msg: P? = null)
+    fun showEmpty()
 
     /**
      * Show error 页面
      */
-    fun <Q> showError(msg: Q? = null)
+    fun showError()
 
 }
