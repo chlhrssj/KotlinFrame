@@ -42,9 +42,9 @@ class MainActivity : BaseVcActivity<ActivityMainBinding>(),
     }
 
     private fun initBottomNavigationView() {
-        binding.nvView.itemIconTintList = null
-        binding.nvView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
-        binding.nvView.setOnNavigationItemSelectedListener {
+        binding.nvBView.itemIconTintList = null
+        binding.nvBView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
+        binding.nvBView.setOnNavigationItemSelectedListener {
             this.onNavigationItemSelected(
                 it
             )

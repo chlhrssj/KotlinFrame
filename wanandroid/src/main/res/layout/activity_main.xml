@@ -15,7 +15,7 @@
             android:layout_weight="1"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/nv_view"
+            android:id="@+id/nv_b_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_50"
             android:background="@color/white"

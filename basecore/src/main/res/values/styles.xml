@@ -23,4 +23,8 @@
         <!-- 还可以加入一些弹出和退出的动画 (lan)-->
     </style>
 
+    <style name="TabTextStyle" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
+
 </resources>
