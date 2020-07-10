@@ -6,6 +6,7 @@ import androidx.viewbinding.ViewBinding
 import com.chlhrssj.basecore.base.ui.mvc.BaseVcActivity
 import com.chlhrssj.wanandroid.R
 import com.chlhrssj.wanandroid.databinding.ActivityMainBinding
+import com.chlhrssj.wanandroid.ui.home.HomeFragment
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -35,8 +36,7 @@ class MainActivity : BaseVcActivity<ActivityMainBinding>(),
 
     private fun initFragment() {
         mFragmentList = ArrayList()
-        mFragmentList.add(Fragment())
-        mFragmentList.add(Fragment())
+        mFragmentList.add(HomeFragment())
         mFragmentList.add(Fragment())
         mFragmentList.add(Fragment())
     }
