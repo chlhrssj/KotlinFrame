@@ -31,6 +31,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+
     //公用依赖包
     api project(':projectcore')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
