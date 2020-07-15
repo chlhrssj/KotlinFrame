@@ -3,33 +3,52 @@ package com.chlhrssj.wanandroid.ui.main
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import androidx.viewpager2.widget.ViewPager2
 import com.chlhrssj.basecore.base.ui.mvc.BaseVcActivity
 import com.chlhrssj.wanandroid.R
 import com.chlhrssj.wanandroid.databinding.ActivityMainBinding
 import com.chlhrssj.wanandroid.ui.home.HomeFragment
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.google.android.material.navigation.NavigationView
+import com.gyf.immersionbar.ktx.immersionBar
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.ArrayList
 
 class MainActivity : BaseVcActivity<ActivityMainBinding>(),
     NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var mFragmentList: MutableList<Fragment>
-    private var mCurrentFragment: Fragment? = null
+    lateinit var mFragmentList: MutableList<Fragment>
 
     override fun initView() {
         initFragment()
+
+        binding.vpView.adapter = MainFragmentPagerAdapter(this)
+        binding.vpView.offscreenPageLimit = 3
+        binding.vpView.isUserInputEnabled = false
+//        binding.vpView.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//            override fun onPageSelected(position: Int) {
+//                super.onPageSelected(position)
+//                binding.nvBView.menu.getItem(position).isChecked = true
+//            }
+//        })
+
         initBottomNavigationView()
     }
 
     override fun initBinding(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
 
+    override fun initImmersionBar() {
+        immersionBar {
+            fitsSystemWindows(true)
+            statusBarColor(R.color.colorPrimary)
+        }
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.tab_home -> addFragment(R.id.ly_pager, mFragmentList[0])
-            R.id.tab_yours -> addFragment(R.id.ly_pager, mFragmentList[1])
-            R.id.tab_us -> addFragment(R.id.ly_pager, mFragmentList[2])
+            R.id.tab_home -> vp_view.setCurrentItem(0, true)
+            R.id.tab_yours -> vp_view.setCurrentItem(1, true)
+            R.id.tab_us -> vp_view.setCurrentItem(2, true)
         }
         return true
     }
@@ -49,39 +68,6 @@ class MainActivity : BaseVcActivity<ActivityMainBinding>(),
                 it
             )
         }
-        // 预设定进来后,默认显示fragment
-        addFragment(R.id.ly_pager, mFragmentList[0])
-
     }
-
-    /**
-     * 显示fragment
-     *
-     * @param frameLayoutId
-     * @param fragment
-     */
-    @Synchronized
-    private fun addFragment(frameLayoutId: Int, fragment: Fragment?) {
-        if (fragment != null) {
-            val transaction = supportFragmentManager.beginTransaction()
-            val temp = mCurrentFragment
-            if (fragment.isAdded) {
-                if (temp != null) {
-                    transaction.hide(temp).show(fragment)
-                } else {
-                    transaction.show(fragment)
-                }
-            } else {
-                if (temp != null) {
-                    transaction.hide(temp).add(frameLayoutId, fragment)
-                } else {
-                    transaction.add(frameLayoutId, fragment)
-                }
-            }
-            mCurrentFragment = fragment
-            transaction.commit()
-        }
-    }
-
 
 }

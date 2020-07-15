@@ -3,6 +3,7 @@ package com.chlhrssj.wanandroid.ui.home
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.GravityCompat
@@ -28,11 +29,24 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(), View.
     override fun initView() {
         super.initView()
 
-        bar_view.setNavigationOnClickListener { drawer.openDrawer(GravityCompat.START) }
+        binding.barView.setNavigationOnClickListener {
+            drawer.openDrawer(GravityCompat.START)
+        }
+
+        binding.nvView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_more -> {}
+                R.id.nav_exit -> {}
+                R.id.nav_about -> {}
+            }
+            true
+        }
     }
 
     override fun onClick(p0: View?) {
 
     }
+
+
 
 }

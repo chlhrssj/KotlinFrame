@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.chlhrssj.wanandroid">
 
-    <application android:theme="@style/RssjAppTheme">
+    <application
+            android:theme="@style/RssjAppTheme"
+            android:name="com.chlhrssj.projectcore.base.MyApp">
         <activity android:name=".ui.main.MainActivity"
                   android:screenOrientation="portrait">
             <intent-filter>
