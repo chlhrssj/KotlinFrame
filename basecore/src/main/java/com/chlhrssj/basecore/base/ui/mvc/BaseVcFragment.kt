@@ -21,7 +21,7 @@ abstract class BaseVcFragment<T : ViewBinding> : Fragment(), ILoadView {
         get() = this
     protected var regEvent: Boolean = false
     private var _binding: T? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

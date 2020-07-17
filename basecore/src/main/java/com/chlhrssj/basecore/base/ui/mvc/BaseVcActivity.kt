@@ -27,7 +27,7 @@ abstract class BaseVcActivity<T : ViewBinding> : AppCompatActivity(),
         get() = this
     protected var regEvent: Boolean = false
     private var _binding: T? = null
-    protected val binding get() = _binding!!
+    val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -3,10 +3,10 @@ package com.chlhrssj.basecore.base.bean
 /**
  * Create by rssj on 2020/7/3
  */
-sealed class Result<out T : Any> {
+sealed class BaseResult<out T : Any> {
 
-    data class Success<out T : Any>(val data: T) : Result<T>()
-    data class Error(val exception: Exception) : Result<Nothing>()
+    data class Success<out T : Any>(val data: T) : BaseResult<T>()
+    data class Error(val exception: Exception) : BaseResult<Nothing>()
 
     override fun toString(): String {
         return when (this) {

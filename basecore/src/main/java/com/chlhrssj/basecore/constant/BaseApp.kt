@@ -64,7 +64,9 @@ open class BaseApp : Application() {
     fun getActCtrl() : ActivityControl =  mActivityControl
 
     companion object {
+        @JvmStatic
         private lateinit var app: BaseApp
+        @JvmStatic
         fun getApp() : BaseApp {
             return app
         }

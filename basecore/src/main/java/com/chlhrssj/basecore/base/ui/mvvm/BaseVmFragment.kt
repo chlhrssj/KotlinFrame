@@ -23,13 +23,13 @@ abstract class BaseVmFragment<VM : BaseViewModel, T : ViewBinding> : Fragment(),
 
     protected lateinit var viewModel: VM
     private var _binding: T? = null
-    protected val binding get() = _binding!!
+    val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initVM()
         initData()
         initView()
-        initVM()
         startObserve()
         if (regEvent) {
             EventBus.getDefault().register(this)

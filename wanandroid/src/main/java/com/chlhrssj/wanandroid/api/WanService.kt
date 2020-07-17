@@ -1,5 +1,10 @@
 package com.chlhrssj.wanandroid.api
 
+import com.chlhrssj.basecore.base.bean.BaseBean
+import com.chlhrssj.wanandroid.bean.ArticleListBean
+import retrofit2.http.GET
+import retrofit2.http.Path
+
 
 /**
  * Created by luyao
@@ -11,5 +16,7 @@ interface WanService {
         const val BASE_URL = "https://www.wanandroid.com"
     }
 
+    @GET("/article/list/{page}/json")
+    suspend fun getHomeArticles(@Path("page") page: Int): BaseBean<ArticleListBean>
 
 }

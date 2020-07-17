@@ -30,7 +30,7 @@ abstract class BaseVmActivity<VM : BaseViewModel, T : ViewBinding> : AppCompatAc
 
     protected lateinit var viewModel: VM
     private var _binding: T? = null
-    protected val binding get() = _binding!!
+    val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

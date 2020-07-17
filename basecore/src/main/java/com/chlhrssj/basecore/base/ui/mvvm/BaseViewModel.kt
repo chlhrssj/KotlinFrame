@@ -13,21 +13,21 @@ abstract class BaseViewModel : ViewModel() {
     private val viewModelJob = SupervisorJob()
     private val ioScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
-    private fun launchOnUI(block: suspend CoroutineScope.() -> Unit) {
+    protected fun launchOnUI(block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch { block() }
     }
 
-    private fun launchOnIO(block: suspend CoroutineScope.() -> Unit) {
+    protected fun launchOnIO(block: suspend CoroutineScope.() -> Unit) {
         ioScope.launch { block() }
     }
 
-    fun launch(tryBlock: suspend CoroutineScope.() -> Unit) {
+    protected fun launch(tryBlock: suspend CoroutineScope.() -> Unit) {
         launchOnUI {
             tryCatch(tryBlock, {}, {}, true)
         }
     }
 
-    private suspend fun tryCatch(
+    protected suspend fun tryCatch(
         tryBlock: suspend CoroutineScope.() -> Unit,
         catchBlock: suspend CoroutineScope.(Throwable) -> Unit,
         finallyBlock: suspend CoroutineScope.() -> Unit,
