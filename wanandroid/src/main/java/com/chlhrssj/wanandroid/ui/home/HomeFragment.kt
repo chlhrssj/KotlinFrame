@@ -1,28 +1,40 @@
 package com.chlhrssj.wanandroid.ui.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
+import android.widget.LinearLayout
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
 import com.chlhrssj.basecore.base.ui.mvvm.BaseVmFragment
+import com.chlhrssj.basecore.ext.dp2px
 import com.chlhrssj.wanandroid.R
 import com.chlhrssj.wanandroid.bean.ArticleListBean
+import com.chlhrssj.wanandroid.bean.BannerBean
 import com.chlhrssj.wanandroid.databinding.FragmentHomeBinding
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.youth.banner.Banner
+import com.youth.banner.adapter.BannerAdapter
+import com.youth.banner.adapter.BannerImageAdapter
+import com.youth.banner.config.BannerConfig
+import com.youth.banner.holder.BannerImageHolder
+import com.youth.banner.indicator.CircleIndicator
+import com.youth.banner.listener.OnBannerListener
 
 class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(), View.OnClickListener {
 
     private val dataList = ArrayList<ArticleListBean.Data>()
     private val homeAdapter by lazy { HomeAdapter(dataList) }
+    private val banner by lazy { Banner<BannerBean, BannerImageAdapter<BannerBean>>(context) }
 
     override fun initBinding(
         inflater: LayoutInflater,
@@ -53,6 +65,22 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(), View.
                 true
             }
 
+            banner.run {
+                layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, banner.dp2px(200))
+                indicator = CircleIndicator(context)
+                addBannerLifecycleObserver(this@HomeFragment)
+                setOnBannerListener { _, _ ->
+
+                }
+            }
+
+            homeAdapter.let {
+                it.addHeaderView(banner)
+                it.setOnItemClickListener { _, _, _ ->
+
+                }
+            }
+
             rvData.adapter = homeAdapter
             rvData.layoutManager = LinearLayoutManager(context)
             rvData.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
@@ -69,7 +97,6 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(), View.
                 }
 
             })
-
         }
 
         viewModel.run {
@@ -84,9 +111,27 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(), View.
                 dataList.addAll(it.datas)
                 homeAdapter.notifyDataSetChanged()
             })
+
+            bannerLiveData.observe(this@HomeFragment, Observer {
+                banner.setAdapter(object : BannerImageAdapter<BannerBean>(it){
+                    override fun onBindView(
+                        holder: BannerImageHolder?,
+                        data: BannerBean?,
+                        position: Int,
+                        size: Int
+                    ) {
+                        this@HomeFragment.context?.let { Glide.with(it)
+                            .load(data?.imagePath)
+                            .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))
+                            .into(holder!!.imageView)}
+                    }
+                })
+                banner.start()
+            })
         }
 
         binding.refresh.autoRefresh()
+        viewModel.getBanner()
     }
 
     override fun onClick(p0: View?) {
@@ -98,3 +143,4 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(), View.
     }
 
 }
+

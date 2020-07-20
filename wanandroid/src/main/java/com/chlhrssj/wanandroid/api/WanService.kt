@@ -2,6 +2,7 @@ package com.chlhrssj.wanandroid.api
 
 import com.chlhrssj.basecore.base.bean.BaseBean
 import com.chlhrssj.wanandroid.bean.ArticleListBean
+import com.chlhrssj.wanandroid.bean.BannerBean
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -18,5 +19,8 @@ interface WanService {
 
     @GET("/article/list/{page}/json")
     suspend fun getHomeArticles(@Path("page") page: Int): BaseBean<ArticleListBean>
+
+    @GET("/banner/json")
+    suspend fun getBanner(): BaseBean<List<BannerBean>>
 
 }

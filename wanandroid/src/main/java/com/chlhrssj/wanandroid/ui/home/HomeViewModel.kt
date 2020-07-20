@@ -8,6 +8,7 @@ import com.chlhrssj.basecore.base.ui.mvvm.BaseViewModel
 import com.chlhrssj.basecore.constant.BaseApp
 import com.chlhrssj.basecore.util.ToastUtils
 import com.chlhrssj.wanandroid.bean.ArticleListBean
+import com.chlhrssj.wanandroid.bean.BannerBean
 import com.chlhrssj.wanandroid.repository.ArticleRepository
 
 /**
@@ -16,6 +17,7 @@ import com.chlhrssj.wanandroid.repository.ArticleRepository
 class HomeViewModel : BaseViewModel() {
 
     val artLiveData by lazy { MutableLiveData<ArticleListBean>() }
+    val bannerLiveData by lazy { MutableLiveData<List<BannerBean>>() }
 
     var page = 0
     val articleRepository: ArticleRepository by lazy { ArticleRepository() }
@@ -29,6 +31,16 @@ class HomeViewModel : BaseViewModel() {
                 is BaseResult.Error -> ToastUtils.showShort(BaseApp.getApp(), result.exception.toString())
             }
 
+        }
+    }
+
+    fun getBanner() {
+        launchOnIO {
+            val result = articleRepository.getBanner()
+            when(result) {
+                is BaseResult.Success -> bannerLiveData.postValue(result.data)
+                is BaseResult.Error -> ToastUtils.showShort(BaseApp.getApp(), result.exception.toString())
+            }
         }
     }
 
