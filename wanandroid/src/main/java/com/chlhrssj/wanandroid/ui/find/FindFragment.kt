@@ -30,7 +30,6 @@ class FindFragment : BaseVmFragment<FindViewModel, FragmentFindBinding>(), View.
     override fun initView() {
         super.initView()
 
-        bar_view.setNavigationOnClickListener { drawer.openDrawer(GravityCompat.START) }
     }
 
     override fun onClick(p0: View?) {

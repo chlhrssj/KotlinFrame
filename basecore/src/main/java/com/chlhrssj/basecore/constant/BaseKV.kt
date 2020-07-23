@@ -24,3 +24,8 @@ const val KV_ID = "ID"
 const val KV_Count = "COUNT"
 
 const val KV_Name = "NAME"
+
+/**
+ * SP映射类
+ */
+const val KV_BASESP = "defaultSP"

@@ -6,12 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.GravityCompat
+import com.bumptech.glide.Glide
 import com.chlhrssj.basecore.base.ui.mvvm.BaseVmFragment
 import com.chlhrssj.wanandroid.R
 import com.chlhrssj.wanandroid.databinding.FragmentHomeBinding
 import com.chlhrssj.wanandroid.databinding.FragmentUsBinding
 import com.chlhrssj.wanandroid.ui.home.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_us.*
+import luyao.wanandroid.model.prefs.UserPrefs
 
 class UsFragment : BaseVmFragment<UsViewModel, FragmentUsBinding>(), View.OnClickListener {
 
@@ -30,10 +33,50 @@ class UsFragment : BaseVmFragment<UsViewModel, FragmentUsBinding>(), View.OnClic
     override fun initView() {
         super.initView()
 
-        bar_view.setNavigationOnClickListener { drawer.openDrawer(GravityCompat.START) }
+        binding.run {
+            btnAbout.setOnClickListener(this@UsFragment)
+            btnExit.setOnClickListener(this@UsFragment)
+            btnMore.setOnClickListener(this@UsFragment)
+            ivHead.setOnClickListener(this@UsFragment)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.run {
+            if (UserPrefs.instance.isLogin()) {
+                btnExit.visibility = View.VISIBLE
+                tvName.text = UserPrefs.instance.getUser()?.username
+                Glide.with(this@UsFragment.context!!)
+                    .load(UserPrefs.instance.getUser()?.icon)
+                    .into(ivHead)
+            } else {
+                btnExit.visibility = View.GONE
+                tvName.text = getString(R.string.us_login)
+                Glide.with(this@UsFragment.context!!)
+                    .load(R.drawable.icon_normal_default_head)
+                    .into(ivHead)
+            }
+        }
+
     }
 
     override fun onClick(p0: View?) {
+        when (p0?.id) {
+            R.id.btn_about -> {
+            }
+            R.id.btn_exit -> doLogout()
+            R.id.btn_more -> {
+            }
+            R.id.iv_head -> if (!UserPrefs.instance.isLogin()) {doLogin()}
+        }
+    }
+
+    private fun doLogin() {
+
+    }
+
+    private fun doLogout() {
 
     }
 

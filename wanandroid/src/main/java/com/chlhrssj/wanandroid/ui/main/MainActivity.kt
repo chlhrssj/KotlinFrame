@@ -7,7 +7,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.chlhrssj.basecore.base.ui.mvc.BaseVcActivity
 import com.chlhrssj.wanandroid.R
 import com.chlhrssj.wanandroid.databinding.ActivityMainBinding
+import com.chlhrssj.wanandroid.ui.find.FindFragment
 import com.chlhrssj.wanandroid.ui.home.HomeFragment
+import com.chlhrssj.wanandroid.ui.us.UsFragment
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.google.android.material.navigation.NavigationView
 import com.gyf.immersionbar.ktx.immersionBar
@@ -56,8 +58,8 @@ class MainActivity : BaseVcActivity<ActivityMainBinding>(),
     private fun initFragment() {
         mFragmentList = ArrayList()
         mFragmentList.add(HomeFragment())
-        mFragmentList.add(Fragment())
-        mFragmentList.add(Fragment())
+        mFragmentList.add(FindFragment())
+        mFragmentList.add(UsFragment())
     }
 
     private fun initBottomNavigationView() {
