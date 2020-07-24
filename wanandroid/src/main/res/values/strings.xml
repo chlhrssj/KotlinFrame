@@ -1,5 +1,7 @@
 <resources>
 
+    <string name="login">登录</string>
+
     <string name="main_page_0">首页</string>
     <string name="main_page_1">发现</string>
     <string name="main_page_2">我的</string>
@@ -9,5 +11,8 @@
     <string name="draw_more">更多</string>
 
     <string name="us_login">点击头像登录</string>
+
+    <string name="login_user_hint">请输入账号</string>
+    <string name="login_pwd_hint">请输入密码</string>
 
 </resources>
