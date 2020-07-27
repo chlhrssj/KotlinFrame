@@ -22,11 +22,11 @@ class LoginViewModel : BaseViewModel() {
         password: String,
         successBlock: suspend CoroutineScope.() -> Unit
     ) {
-        launchOnIO {
+        launchOnUI {
             when (val result = accountRepository.execLogin(userName, password)) {
                 is BaseResult.Success -> {
                     UserPrefs.instance.setUser(result.data)
-                    withContext(Dispatchers.Main, successBlock)
+                    successBlock.invoke(this)
                 }
                 is BaseResult.Error -> ToastUtils.showShort(
                     BaseApp.getApp(),

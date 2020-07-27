@@ -10,6 +10,8 @@ import com.chlhrssj.basecore.util.ToastUtils
 import com.chlhrssj.wanandroid.bean.ArticleListBean
 import com.chlhrssj.wanandroid.bean.BannerBean
 import com.chlhrssj.wanandroid.repository.ArticleRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * Create by rssj on 2020/7/8
@@ -27,7 +29,7 @@ class HomeViewModel : BaseViewModel() {
         launchOnIO {
             when(val result = articleRepository.getHomeArticleList(page)) {
                 is BaseResult.Success -> artLiveData.postValue(result.data)
-                is BaseResult.Error -> ToastUtils.showShort(BaseApp.getApp(), result.exception.toString())
+                is BaseResult.Error -> withContext(Dispatchers.Main) {ToastUtils.showShort(BaseApp.getApp(), result.exception.toString())}
             }
 
         }
@@ -37,7 +39,7 @@ class HomeViewModel : BaseViewModel() {
         launchOnIO {
             when(val result = articleRepository.getBanner()) {
                 is BaseResult.Success -> bannerLiveData.postValue(result.data)
-                is BaseResult.Error -> ToastUtils.showShort(BaseApp.getApp(), result.exception.toString())
+                is BaseResult.Error -> withContext(Dispatchers.Main) {ToastUtils.showShort(BaseApp.getApp(), result.exception.toString())}
             }
         }
     }
