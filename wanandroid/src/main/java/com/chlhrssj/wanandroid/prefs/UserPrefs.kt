@@ -23,15 +23,15 @@ class UserPrefs private constructor() {
 
     private var user by SharePreferenceDelegate(KV_USER, "")
 
-    fun setUser(userBean: UserBean) {
-        user = Gson().toJson(userBean)
+    fun setUser(userBean: UserBean?) {
+        user = if (userBean == null) "" else Gson().toJson(userBean)
     }
 
-    fun getUser() : UserBean? {
+    fun getUser(): UserBean? {
         return Gson().fromJson(user, UserBean::class.java)
     }
 
-    fun isLogin() : Boolean {
+    fun isLogin(): Boolean {
         return user.isNotEmpty()
     }
 

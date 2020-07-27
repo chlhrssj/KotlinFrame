@@ -15,4 +15,7 @@
     <string name="login_user_hint">请输入账号</string>
     <string name="login_pwd_hint">请输入密码</string>
 
+    <string name="toast_null_name">用户名不能为空！</string>
+    <string name="toast_null_pwd">密码不能为空！</string>
+
 </resources>

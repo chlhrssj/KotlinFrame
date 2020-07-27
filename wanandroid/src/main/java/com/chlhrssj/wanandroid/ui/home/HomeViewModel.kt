@@ -25,8 +25,7 @@ class HomeViewModel : BaseViewModel() {
     fun getList(isRefresh: Boolean) {
         page = if (isRefresh) 0 else page + 1
         launchOnIO {
-            val result = articleRepository.getHomeArticleList(page)
-            when(result) {
+            when(val result = articleRepository.getHomeArticleList(page)) {
                 is BaseResult.Success -> artLiveData.postValue(result.data)
                 is BaseResult.Error -> ToastUtils.showShort(BaseApp.getApp(), result.exception.toString())
             }
@@ -36,8 +35,7 @@ class HomeViewModel : BaseViewModel() {
 
     fun getBanner() {
         launchOnIO {
-            val result = articleRepository.getBanner()
-            when(result) {
+            when(val result = articleRepository.getBanner()) {
                 is BaseResult.Success -> bannerLiveData.postValue(result.data)
                 is BaseResult.Error -> ToastUtils.showShort(BaseApp.getApp(), result.exception.toString())
             }

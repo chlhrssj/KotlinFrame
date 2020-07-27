@@ -3,8 +3,8 @@ package com.chlhrssj.wanandroid.api
 import com.chlhrssj.basecore.base.bean.BaseBean
 import com.chlhrssj.wanandroid.bean.ArticleListBean
 import com.chlhrssj.wanandroid.bean.BannerBean
-import retrofit2.http.GET
-import retrofit2.http.Path
+import com.chlhrssj.wanandroid.bean.UserBean
+import retrofit2.http.*
 
 
 /**
@@ -22,5 +22,9 @@ interface WanService {
 
     @GET("/banner/json")
     suspend fun getBanner(): BaseBean<List<BannerBean>>
+
+    @FormUrlEncoded
+    @POST("/user/login")
+    suspend fun login(@Field("username") userName: String, @Field("password") passWord: String): BaseBean<UserBean>
 
 }
