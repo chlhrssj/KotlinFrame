@@ -1,6 +1,7 @@
 <resources>
 
     <string name="login">登录</string>
+    <string name="license">license</string>
 
     <string name="main_page_0">首页</string>
     <string name="main_page_1">发现</string>
@@ -15,6 +16,10 @@
     <string name="login_user_hint">请输入账号</string>
     <string name="login_pwd_hint">请输入密码</string>
     <string name="login_title">登录</string>
+
+    <string name="about_title">关于</string>
+    <string name="about_source">源代码地址</string>
+    <string name="about_reference">项目代码参考地址</string>
 
     <string name="toast_null_name">用户名不能为空！</string>
     <string name="toast_null_pwd">密码不能为空！</string>

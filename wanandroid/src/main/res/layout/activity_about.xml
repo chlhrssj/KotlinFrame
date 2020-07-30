@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.baout.AboutActivity">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:title="@string/about_title"
+            app:navigationIcon="@drawable/icon_normal_back"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextColor="@color/white"/>
+
+    <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:src="@mipmap/icon_hong"/>
+
+    <TextView
+            android:id="@+id/versionName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorText"
+            android:textSize="14sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            tools:text="V 1.0.0"/>
+
+    <View style="@style/Line"
+            android:layout_marginTop="20dp"/>
+
+    <TextView
+            android:id="@+id/btn_reference"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:paddingStart="@dimen/dp_16"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/colorText"
+            android:text="@string/about_reference" />
+
+    <View style="@style/Line"/>
+
+    <TextView
+            android:id="@+id/btn_license"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:paddingStart="@dimen/dp_16"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/colorText"
+            android:text="@string/license" />
+
+    <View style="@style/Line"/>
+
+    <TextView
+            android:id="@+id/btn_source"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:paddingStart="@dimen/dp_16"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/colorText"
+            android:text="@string/about_source"/>
+
+    <View style="@style/Line"/>
+
+</LinearLayout>

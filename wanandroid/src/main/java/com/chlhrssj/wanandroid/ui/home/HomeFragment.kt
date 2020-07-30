@@ -26,6 +26,7 @@ import com.chlhrssj.wanandroid.constant.KV_LOGIN
 import com.chlhrssj.wanandroid.constant.KV_LOGOUT
 import com.chlhrssj.wanandroid.constant.KV_URL
 import com.chlhrssj.wanandroid.databinding.FragmentHomeBinding
+import com.chlhrssj.wanandroid.ui.baout.AboutActivity
 import com.chlhrssj.wanandroid.ui.browser.BrowserActivity
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
@@ -76,8 +77,7 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(){
                         UserPrefs.instance.setUser(null)
                         EventBus.getDefault().post(BaseEvent(KV_LOGOUT))
                     }
-                    R.id.nav_about -> {
-                    }
+                    R.id.nav_about -> startKtxActivity<AboutActivity>()
                 }
                 true
             }

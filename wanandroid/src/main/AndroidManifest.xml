@@ -5,7 +5,8 @@
     <application
             android:name="com.chlhrssj.projectcore.base.MyApp"
             android:theme="@style/RssjAppTheme">
-        <activity android:name=".ui.browser.BrowserActivity"></activity>
+        <activity android:name=".ui.baout.AboutActivity"></activity>
+        <activity android:name=".ui.browser.BrowserActivity" />
         <activity android:name=".ui.login.LoginActivity" />
         <activity
                 android:name=".ui.main.MainActivity"

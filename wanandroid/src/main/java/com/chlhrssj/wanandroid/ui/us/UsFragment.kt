@@ -10,11 +10,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.BaseRequestOptions
 import com.chlhrssj.basecore.base.event.BaseEvent
 import com.chlhrssj.basecore.base.ui.mvvm.BaseVmFragment
+import com.chlhrssj.basecore.ext.startKtxActivity
 import com.chlhrssj.wanandroid.R
 import com.chlhrssj.wanandroid.constant.KV_LOGIN
 import com.chlhrssj.wanandroid.constant.KV_LOGOUT
 import com.chlhrssj.wanandroid.databinding.FragmentHomeBinding
 import com.chlhrssj.wanandroid.databinding.FragmentUsBinding
+import com.chlhrssj.wanandroid.ui.baout.AboutActivity
 import com.chlhrssj.wanandroid.ui.home.HomeViewModel
 import com.chlhrssj.wanandroid.ui.login.LoginActivity
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -55,8 +57,7 @@ class UsFragment : BaseVmFragment<UsViewModel, FragmentUsBinding>(), View.OnClic
             R.id.btn_about -> {
             }
             R.id.btn_exit -> doLogout()
-            R.id.btn_more -> {
-            }
+            R.id.btn_more -> startKtxActivity<AboutActivity>()
             R.id.iv_head -> if (!UserPrefs.instance.isLogin()) {doLogin()}
         }
     }
