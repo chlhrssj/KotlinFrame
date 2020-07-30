@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.BaseRequestOptions
+import com.chlhrssj.basecore.base.event.BaseEvent
 import com.chlhrssj.basecore.base.ui.mvvm.BaseVmFragment
 import com.chlhrssj.wanandroid.R
+import com.chlhrssj.wanandroid.constant.KV_LOGIN
+import com.chlhrssj.wanandroid.constant.KV_LOGOUT
 import com.chlhrssj.wanandroid.databinding.FragmentHomeBinding
 import com.chlhrssj.wanandroid.databinding.FragmentUsBinding
 import com.chlhrssj.wanandroid.ui.home.HomeViewModel
@@ -17,6 +20,7 @@ import com.chlhrssj.wanandroid.ui.login.LoginActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_us.*
 import luyao.wanandroid.model.prefs.UserPrefs
+import org.greenrobot.eventbus.EventBus
 
 class UsFragment : BaseVmFragment<UsViewModel, FragmentUsBinding>(), View.OnClickListener {
 
@@ -30,6 +34,7 @@ class UsFragment : BaseVmFragment<UsViewModel, FragmentUsBinding>(), View.OnClic
 
     override fun initData() {
         super.initData()
+        regEvent = true
     }
 
     override fun initView() {
@@ -41,10 +46,7 @@ class UsFragment : BaseVmFragment<UsViewModel, FragmentUsBinding>(), View.OnClic
             btnMore.setOnClickListener(this@UsFragment)
             ivHead.setOnClickListener(this@UsFragment)
         }
-    }
 
-    override fun onStart() {
-        super.onStart()
         checkLogin()
     }
 
@@ -59,13 +61,19 @@ class UsFragment : BaseVmFragment<UsViewModel, FragmentUsBinding>(), View.OnClic
         }
     }
 
+    override fun onEvent(event: BaseEvent) {
+        if (event.type == KV_LOGIN || event.type == KV_LOGOUT) {
+            checkLogin()
+        }
+    }
+
     private fun doLogin() {
         context?.let { LoginActivity.openLoginAct(it) }
     }
 
     private fun doLogout() {
         UserPrefs.instance.setUser(null)
-        checkLogin()
+        EventBus.getDefault().post(BaseEvent(KV_LOGOUT))
     }
 
     private fun checkLogin() {

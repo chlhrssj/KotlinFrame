@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -14,12 +15,18 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.chlhrssj.basecore.base.event.BaseEvent
 import com.chlhrssj.basecore.base.ui.mvvm.BaseVmFragment
 import com.chlhrssj.basecore.ext.dp2px
+import com.chlhrssj.basecore.ext.startKtxActivity
 import com.chlhrssj.wanandroid.R
 import com.chlhrssj.wanandroid.bean.ArticleListBean
 import com.chlhrssj.wanandroid.bean.BannerBean
+import com.chlhrssj.wanandroid.constant.KV_LOGIN
+import com.chlhrssj.wanandroid.constant.KV_LOGOUT
+import com.chlhrssj.wanandroid.constant.KV_URL
 import com.chlhrssj.wanandroid.databinding.FragmentHomeBinding
+import com.chlhrssj.wanandroid.ui.browser.BrowserActivity
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.youth.banner.Banner
@@ -29,8 +36,11 @@ import com.youth.banner.config.BannerConfig
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.listener.OnBannerListener
+import de.hdodenhof.circleimageview.CircleImageView
+import luyao.wanandroid.model.prefs.UserPrefs
+import org.greenrobot.eventbus.EventBus
 
-class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(), View.OnClickListener {
+class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(){
 
     private val dataList = ArrayList<ArticleListBean.Data>()
     private val homeAdapter by lazy { HomeAdapter(dataList) }
@@ -43,6 +53,11 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(), View.
     ): FragmentHomeBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
     override fun getVMClass(): Class<HomeViewModel> = HomeViewModel::class.java
+
+    override fun initData() {
+        super.initData()
+        regEvent = true
+    }
 
     override fun initView() {
         super.initView()
@@ -58,6 +73,8 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(), View.
                     R.id.nav_more -> {
                     }
                     R.id.nav_exit -> {
+                        UserPrefs.instance.setUser(null)
+                        EventBus.getDefault().post(BaseEvent(KV_LOGOUT))
                     }
                     R.id.nav_about -> {
                     }
@@ -66,18 +83,19 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(), View.
             }
 
             banner.run {
-                layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, banner.dp2px(200))
+                layoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    banner.dp2px(200)
+                )
+                isClickable = true
                 indicator = CircleIndicator(context)
                 addBannerLifecycleObserver(this@HomeFragment)
-                setOnBannerListener { _, _ ->
-
-                }
             }
 
             homeAdapter.let {
                 it.addHeaderView(banner)
-                it.setOnItemClickListener { _, _, _ ->
-
+                it.setOnItemClickListener { _, _, position ->
+                    startKtxActivity<BrowserActivity>(value = Pair(KV_URL, dataList[position].link))
                 }
             }
 
@@ -87,7 +105,7 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(), View.
 
             refresh.setEnableRefresh(true)
             refresh.setEnableLoadMore(true)
-            refresh.setOnRefreshLoadMoreListener(object: OnRefreshLoadMoreListener {
+            refresh.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
                 override fun onLoadMore(refreshLayout: RefreshLayout) {
                     getList(false)
                 }
@@ -113,17 +131,24 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(), View.
             })
 
             bannerLiveData.observe(this@HomeFragment, Observer {
-                banner.setAdapter(object : BannerImageAdapter<BannerBean>(it){
+                banner.adapter = object : BannerImageAdapter<BannerBean>(it) {
                     override fun onBindView(
                         holder: BannerImageHolder?,
                         data: BannerBean?,
                         position: Int,
                         size: Int
                     ) {
-                        this@HomeFragment.context?.let { Glide.with(it)
-                            .load(data?.imagePath)
-                            .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))
-                            .into(holder!!.imageView)}
+                        this@HomeFragment.context?.let {
+                            Glide.with(it)
+                                .load(data?.imagePath)
+                                .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))
+                                .into(holder!!.imageView)
+                        }
+                    }
+                }
+                banner.setOnBannerListener(object : OnBannerListener<BannerBean> {
+                    override fun OnBannerClick(data: BannerBean?, position: Int) {
+                        startKtxActivity<BrowserActivity>(value = Pair(KV_URL, data!!.url))
                     }
                 })
                 banner.start()
@@ -132,14 +157,38 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(), View.
 
         binding.refresh.autoRefresh()
         viewModel.getBanner()
+
+        checkLogin()
     }
 
-    override fun onClick(p0: View?) {
-
+    override fun onEvent(event: BaseEvent) {
+        if (event.type == KV_LOGIN || event.type == KV_LOGOUT) {
+            checkLogin()
+        }
     }
 
     fun getList(isRefresh: Boolean) {
         viewModel.getList(isRefresh)
+    }
+
+    private fun checkLogin() {
+        binding.nvView.run {
+            if (UserPrefs.instance.isLogin()) {
+                menu.findItem(R.id.nav_exit).isVisible = true
+                getHeaderView(0).findViewById<TextView>(R.id.tv_user_nav).text = UserPrefs.instance.getUser()?.username
+                Glide.with(context!!)
+                    .load(UserPrefs.instance.getUser()?.icon)
+                    .placeholder(R.drawable.icon_normal_default_head)
+                    .fallback(R.drawable.icon_normal_default_head)
+                    .into(getHeaderView(0).findViewById<CircleImageView>(R.id.iv_head_nav))
+            } else {
+                menu.findItem(R.id.nav_exit).isVisible = false
+                getHeaderView(0).findViewById<TextView>(R.id.tv_user_nav).text = ""
+                Glide.with(context!!)
+                    .load(R.drawable.icon_normal_default_head)
+                    .into(getHeaderView(0).findViewById<CircleImageView>(R.id.iv_head_nav))
+            }
+        }
     }
 
 }

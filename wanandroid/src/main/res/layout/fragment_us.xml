@@ -111,34 +111,34 @@
                     android:layout_height="@dimen/dp_1"
                     android:background="@color/colorDivider"/>
 
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
-                    android:layout_marginTop="@dimen/dp_50"
-                    android:background="@color/colorDivider"/>
-
             <LinearLayout
                     android:id="@+id/btn_exit"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_50"
                     android:background="@color/white"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:background="@color/colorDivider"/>
 
                 <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_8"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_48"
                         android:textSize="@dimen/sp_16"
                         android:text="@string/draw_exit"
+                        android:gravity="center"
                         android:textColor="@color/colorError" />
 
-            </LinearLayout>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:background="@color/colorDivider"/>
 
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
-                    android:background="@color/colorDivider"/>
+            </LinearLayout>
 
         </LinearLayout>
 
