@@ -54,10 +54,9 @@ class UsFragment : BaseVmFragment<UsViewModel, FragmentUsBinding>(), View.OnClic
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.btn_about -> {
-            }
+            R.id.btn_about -> startKtxActivity<AboutActivity>()
             R.id.btn_exit -> doLogout()
-            R.id.btn_more -> startKtxActivity<AboutActivity>()
+            R.id.btn_more -> {}
             R.id.iv_head -> if (!UserPrefs.instance.isLogin()) {doLogin()}
         }
     }

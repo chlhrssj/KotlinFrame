@@ -47,7 +47,7 @@ class LoginActivity : BaseVmActivity<LoginViewModel, ActivityLoginBinding>() {
 
     }
 
-    fun canLogin(): Boolean {
+    private fun canLogin(): Boolean {
         binding.let {
             when {
                 it.etName.text.isEmpty() -> {
@@ -64,7 +64,7 @@ class LoginActivity : BaseVmActivity<LoginViewModel, ActivityLoginBinding>() {
         }
     }
 
-    fun doLogin() {
+    private fun doLogin() {
         viewModel.doLogin(
             binding.etName.text.toString(),
             binding.etPwd.text.toString(),
