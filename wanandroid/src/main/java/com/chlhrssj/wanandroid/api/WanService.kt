@@ -1,9 +1,7 @@
 package com.chlhrssj.wanandroid.api
 
 import com.chlhrssj.basecore.base.bean.BaseBean
-import com.chlhrssj.wanandroid.bean.ArticleListBean
-import com.chlhrssj.wanandroid.bean.BannerBean
-import com.chlhrssj.wanandroid.bean.UserBean
+import com.chlhrssj.wanandroid.bean.*
 import retrofit2.http.*
 
 
@@ -26,5 +24,11 @@ interface WanService {
     @FormUrlEncoded
     @POST("/user/login")
     suspend fun login(@Field("username") userName: String, @Field("password") passWord: String): BaseBean<UserBean>
+
+    @GET("project/tree/json")
+    suspend fun getTab(): BaseBean<List<TabBean>>
+
+    @GET("project/list/{page}/json")
+    suspend fun getProject(@Path("page") page: Int, @Field("cid") cid: String): BaseBean<ProjectBean>
 
 }

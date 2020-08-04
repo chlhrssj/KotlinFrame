@@ -22,7 +22,7 @@ class HomeViewModel : BaseViewModel() {
     val bannerLiveData by lazy { MutableLiveData<List<BannerBean>>() }
 
     var page = 0
-    val articleRepository: ArticleRepository by lazy { ArticleRepository() }
+    private val articleRepository: ArticleRepository by lazy { ArticleRepository() }
 
     fun getList(isRefresh: Boolean) {
         page = if (isRefresh) 0 else page + 1
