@@ -29,6 +29,6 @@ interface WanService {
     suspend fun getTab(): BaseBean<List<TabBean>>
 
     @GET("project/list/{page}/json")
-    suspend fun getProject(@Path("page") page: Int, @Field("cid") cid: String): BaseBean<ProjectBean>
+    suspend fun getProject(@Path("page") page: Int, @Query("cid") cid: String): BaseBean<ProjectBean>
 
 }

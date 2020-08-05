@@ -35,6 +35,8 @@ dependencies {
     implementation 'com.youth.banner:banner:2.1.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'de.psdev.licensesdialog:licensesdialog:1.9.0'
+    //图片预览
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 
     //公用依赖包
     api project(':projectcore')

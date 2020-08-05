@@ -22,7 +22,7 @@ class FindViewModel : BaseViewModel() {
     val tabLiveData = MutableLiveData<List<TabBean>>()
     val projectLiveData by lazy { MutableLiveData<ProjectBean>() }
 
-    var page = 0
+    var page = 1
 
     fun getTab() {
         launchOnUI {
@@ -33,7 +33,7 @@ class FindViewModel : BaseViewModel() {
         }
     }
 
-    fun getProject(isRefresh: Boolean, cid: String) {page = if (isRefresh) 0 else page + 1
+    fun getProject(isRefresh: Boolean, cid: String) {page = if (isRefresh) 1 else page + 1
         launchOnUI {
             when(val result = projectRepository.getProject(page, cid)) {
                 is BaseResult.Success -> projectLiveData.postValue(result.data)

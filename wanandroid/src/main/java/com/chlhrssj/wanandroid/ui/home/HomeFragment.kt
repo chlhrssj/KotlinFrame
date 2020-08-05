@@ -104,7 +104,6 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(){
             rvData.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
             refresh.setEnableRefresh(true)
-            refresh.setEnableLoadMore(true)
             refresh.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
                 override fun onLoadMore(refreshLayout: RefreshLayout) {
                     getList(false)
@@ -125,6 +124,10 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(){
                 }
                 if (it.curPage == 1) {
                     dataList.clear()
+                }
+                if (it.curPage >= it.pageCount ) {
+                    //页面已加载完毕
+                    binding.refresh.setEnableLoadMore(false)
                 }
                 dataList.addAll(it.datas)
                 homeAdapter.notifyDataSetChanged()
@@ -168,6 +171,8 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(){
     }
 
     fun getList(isRefresh: Boolean) {
+        if (isRefresh)
+            binding.refresh.setEnableLoadMore(true)
         viewModel.getList(isRefresh)
     }
 
