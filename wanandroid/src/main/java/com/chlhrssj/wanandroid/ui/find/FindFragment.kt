@@ -74,7 +74,7 @@ class FindFragment : BaseVmFragment<FindViewModel, FragmentFindBinding>() {
                 }
                 it.setOnItemChildClickListener { _, view, position ->
                     when (view.id) {
-                        R.id.iv_img -> startKtxActivity<PreviewActivity>(value = Pair(KV_URL, dataList[position].projectLink))
+                        R.id.iv_img -> startKtxActivity<PreviewActivity>(value = Pair(KV_URL, dataList[position].envelopePic))
                     }
                 }
             }

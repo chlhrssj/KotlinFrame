@@ -15,8 +15,7 @@ class PreviewActivity : BaseVcActivity<ActivityPreviewBinding>() {
         ActivityPreviewBinding.inflate(layoutInflater)
 
     override fun initData() {
-//        url = intent.getStringExtra(KV_URL)
-        url = "https://imgs.aixifan.com/content/2020_8_5/1.5965886683495498E9.jpeg"
+        url = intent.getStringExtra(KV_URL)
     }
 
     override fun initView() {
