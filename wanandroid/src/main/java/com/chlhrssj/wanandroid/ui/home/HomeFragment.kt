@@ -28,6 +28,7 @@ import com.chlhrssj.wanandroid.constant.KV_URL
 import com.chlhrssj.wanandroid.databinding.FragmentHomeBinding
 import com.chlhrssj.wanandroid.ui.baout.AboutActivity
 import com.chlhrssj.wanandroid.ui.browser.BrowserActivity
+import com.chlhrssj.wanandroid.ui.more.MoreActivity
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener
 import com.youth.banner.Banner
@@ -71,8 +72,7 @@ class HomeFragment : BaseVmFragment<HomeViewModel, FragmentHomeBinding>(){
 
             nvView.setNavigationItemSelectedListener {
                 when (it.itemId) {
-                    R.id.nav_more -> {
-                    }
+                    R.id.nav_more -> startKtxActivity<MoreActivity>()
                     R.id.nav_exit -> {
                         UserPrefs.instance.setUser(null)
                         EventBus.getDefault().post(BaseEvent(KV_LOGOUT))

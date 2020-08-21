@@ -21,6 +21,10 @@
     <string name="about_source">源代码地址</string>
     <string name="about_reference">项目代码参考地址</string>
 
+    <string name="more_title">更多组件</string>
+    <string name="more_draw">签名板</string>
+
+
     <string name="toast_null_name">用户名不能为空！</string>
     <string name="toast_null_pwd">密码不能为空！</string>
 

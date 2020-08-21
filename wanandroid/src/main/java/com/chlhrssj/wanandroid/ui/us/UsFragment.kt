@@ -19,6 +19,7 @@ import com.chlhrssj.wanandroid.databinding.FragmentUsBinding
 import com.chlhrssj.wanandroid.ui.baout.AboutActivity
 import com.chlhrssj.wanandroid.ui.home.HomeViewModel
 import com.chlhrssj.wanandroid.ui.login.LoginActivity
+import com.chlhrssj.wanandroid.ui.more.MoreActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_us.*
 import luyao.wanandroid.model.prefs.UserPrefs
@@ -56,7 +57,7 @@ class UsFragment : BaseVmFragment<UsViewModel, FragmentUsBinding>(), View.OnClic
         when (p0?.id) {
             R.id.btn_about -> startKtxActivity<AboutActivity>()
             R.id.btn_exit -> doLogout()
-            R.id.btn_more -> {}
+            R.id.btn_more -> startKtxActivity<MoreActivity>()
             R.id.iv_head -> if (!UserPrefs.instance.isLogin()) {doLogin()}
         }
     }
