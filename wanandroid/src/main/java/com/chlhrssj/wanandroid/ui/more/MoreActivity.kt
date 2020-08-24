@@ -1,8 +1,10 @@
 package com.chlhrssj.wanandroid.ui.more
 
 import com.chlhrssj.basecore.base.ui.mvc.BaseVcActivity
+import com.chlhrssj.basecore.ext.startKtxActivity
 import com.chlhrssj.wanandroid.R
 import com.chlhrssj.wanandroid.databinding.ActivityMoreBinding
+import com.chlhrssj.wanandroid.ui.more.draw.DrawActivity
 import com.gyf.immersionbar.ktx.immersionBar
 
 /**
@@ -24,7 +26,7 @@ class MoreActivity : BaseVcActivity<ActivityMoreBinding>() {
     override fun initView() {
         binding.run {
             btnDraw.setOnClickListener {
-
+                startKtxActivity<DrawActivity>()
             }
 
             toolbar.setNavigationOnClickListener { finish() }

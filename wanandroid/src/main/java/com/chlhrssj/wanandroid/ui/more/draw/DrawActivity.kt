@@ -4,12 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.chlhrssj.basecore.base.ui.mvc.BaseVcActivity
 import com.chlhrssj.wanandroid.R
+import com.chlhrssj.wanandroid.databinding.ActivityDrawBinding
 import com.chlhrssj.wanandroid.databinding.ActivityMoreBinding
 import com.gyf.immersionbar.ktx.immersionBar
 
-class DrawActivity : BaseVcActivity<ActivityMoreBinding>() {
+class DrawActivity : BaseVcActivity<ActivityDrawBinding>() {
 
-    override fun initBinding(): ActivityMoreBinding = ActivityMoreBinding.inflate(layoutInflater)
+    override fun initBinding(): ActivityDrawBinding = ActivityDrawBinding.inflate(layoutInflater)
 
     override fun initImmersionBar() {
         immersionBar {
@@ -19,7 +20,9 @@ class DrawActivity : BaseVcActivity<ActivityMoreBinding>() {
     }
 
     override fun initView() {
-        super.initView()
+        binding.run {
+            toolbar.setNavigationOnClickListener { finish() }
+        }
     }
 
 }

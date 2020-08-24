@@ -19,6 +19,8 @@
             app:title="@string/more_draw"
             app:titleTextColor="@color/white" />
 
-
+    <com.chlhrssj.wanandroid.widget.DrawingBoard
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 </LinearLayout>
