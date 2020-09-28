@@ -1,1 +1,2 @@
+include ':banner'
 include ':app', ':basecore', ':projectcore', ':wanandroid'
