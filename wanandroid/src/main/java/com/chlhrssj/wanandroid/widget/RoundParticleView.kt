@@ -1,21 +1,14 @@
-package com.rssj.banner
+package com.chlhrssj.wanandroid.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.RelativeLayout
+import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 
 /**
- * Create by rssj on 2020/9/28
+ * Create by rssj on 2020/10/23
  */
-class BannerView : RelativeLayout {
-
-    private val DEFAULT_AUTO_TIME: Long = 2500
-
-    private var isAutoPlay: Boolean = false
-    private var autoPlayTime = DEFAULT_AUTO_TIME
-
-    private val viewPager2: ViewPager2
+class RoundParticleView: View {
 
     constructor(context: Context) : this(context, null)
 
@@ -26,7 +19,7 @@ class BannerView : RelativeLayout {
         attributeSet,
         defStyleAttr
     ) {
-        viewPager2 = ViewPager2(context);
+
     }
 
 }

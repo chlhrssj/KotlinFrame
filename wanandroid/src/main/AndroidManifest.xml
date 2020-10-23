@@ -5,7 +5,8 @@
     <application
             android:name="com.chlhrssj.projectcore.base.MyApp"
             android:theme="@style/RssjAppTheme">
-        <activity android:name=".ui.more.draw.DrawActivity"></activity>
+        <activity android:name=".ui.more.particle.WangYiYunActivity"></activity>
+        <activity android:name=".ui.more.draw.DrawActivity" />
         <activity
                 android:name=".ui.preview.PreviewActivity"
                 android:screenOrientation="portrait" />
