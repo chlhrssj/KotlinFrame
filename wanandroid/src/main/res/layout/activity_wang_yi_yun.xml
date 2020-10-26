@@ -4,15 +4,37 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/black"
         tools:context=".ui.more.particle.WangYiYunActivity">
+
+    <com.chlhrssj.wanandroid.widget.RoundParticleView
+            android:id="@+id/rp_view"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_img"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:src="@mipmap/cover"
+            app:layout_constraintStart_toStartOf="@id/rp_view"
+            app:layout_constraintEnd_toEndOf="@id/rp_view"
+            app:layout_constraintTop_toTopOf="@id/rp_view"
+            app:layout_constraintBottom_toBottomOf="@id/rp_view"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_exec"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:backgroundTint="@color/white"
+            app:rippleColor="@color/colorFA"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_img"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
