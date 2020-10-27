@@ -23,6 +23,7 @@
 
     <string name="more_title">更多组件</string>
     <string name="more_draw">签名板</string>
+    <string name="more_particle">播放器特效</string>
 
 
     <string name="toast_null_name">用户名不能为空！</string>
