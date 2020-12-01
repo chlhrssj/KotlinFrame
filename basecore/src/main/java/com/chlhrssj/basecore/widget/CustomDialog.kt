@@ -22,7 +22,7 @@ open class CustomDialog(
     var lh: Int = WindowManager.LayoutParams.WRAP_CONTENT
 ) : Dialog(context, R.style.RssjDialog) {
 
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(view)//这行一定要写在前面
