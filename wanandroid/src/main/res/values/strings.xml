@@ -24,9 +24,16 @@
     <string name="more_title">更多组件</string>
     <string name="more_draw">签名板</string>
     <string name="more_particle">播放器特效</string>
+    <string name="more_rx">rxJava实现</string>
 
 
     <string name="toast_null_name">用户名不能为空！</string>
     <string name="toast_null_pwd">密码不能为空！</string>
+    <string name="title_activity_rx">RxActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 
 </resources>

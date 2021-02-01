@@ -44,6 +44,14 @@
             <View
                     style="@style/Line" />
 
+            <TextView
+                    android:id="@+id/btn_rx"
+                    style="@style/More_Tv"
+                    android:text="@string/more_rx" />
+
+            <View
+                    style="@style/Line" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

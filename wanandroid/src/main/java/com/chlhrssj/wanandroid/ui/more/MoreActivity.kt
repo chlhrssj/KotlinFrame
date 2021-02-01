@@ -6,6 +6,7 @@ import com.chlhrssj.wanandroid.R
 import com.chlhrssj.wanandroid.databinding.ActivityMoreBinding
 import com.chlhrssj.wanandroid.ui.more.draw.DrawActivity
 import com.chlhrssj.wanandroid.ui.more.particle.WangYiYunActivity
+import com.chlhrssj.wanandroid.ui.more.rx.RxActivity
 import com.gyf.immersionbar.ktx.immersionBar
 
 /**
@@ -31,6 +32,9 @@ class MoreActivity : BaseVcActivity<ActivityMoreBinding>() {
             }
             btnParticle.setOnClickListener {
                 startKtxActivity<WangYiYunActivity>()
+            }
+            btnRx.setOnClickListener {
+                startKtxActivity<RxActivity>()
             }
 
             toolbar.setNavigationOnClickListener { finish() }

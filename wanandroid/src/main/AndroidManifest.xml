@@ -2,10 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         package="com.chlhrssj.wanandroid">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
             android:name="com.chlhrssj.projectcore.base.MyApp"
             android:theme="@style/RssjAppTheme">
-        <activity android:name=".ui.more.particle.WangYiYunActivity"></activity>
+        <activity
+                android:name=".ui.more.rx.RxActivity"/>
+        <activity android:name=".ui.more.particle.WangYiYunActivity" />
         <activity android:name=".ui.more.draw.DrawActivity" />
         <activity
                 android:name=".ui.preview.PreviewActivity"
